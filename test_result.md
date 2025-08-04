@@ -107,11 +107,11 @@ user_problem_statement: Remove the 'Made with Emergent' button located on the bo
 frontend:
   - task: "Remove Emergent badge from bottom right corner"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/public/index.html"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
@@ -119,6 +119,9 @@ frontend:
         - working: "NA"
         - agent: "main"
         - comment: "Successfully removed the Made with Emergent button from index.html by deleting the entire <a> tag element (lines 36-82). Task completed."
+        - working: true
+        - agent: "main"
+        - comment: "Verified removal successful after frontend restart. Button no longer appears on the page and main app functionality remains intact."
 
 metadata:
   created_by: "main_agent"
