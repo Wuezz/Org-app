@@ -31,6 +31,7 @@ const OwnershipCanvas = () => {
   const [showEditEntityDialog, setShowEditEntityDialog] = useState(false);
   const [editingEntity, setEditingEntity] = useState(null);
   const [editEntityData, setEditEntityData] = useState({ name: '', id: '', type: 'company' });
+  const [showClearAllDialog, setShowClearAllDialog] = useState(false);
   
   const canvasRef = useRef(null);
   const { toast } = useToast();
