@@ -192,11 +192,11 @@ frontend:
         - comment: "Verified text wrapping works correctly. Long entity names are automatically wrapped to multiple lines while maintaining consistent 180px box width. Tested with 'Innovation Chart LLC with Very Long Company Name'."
   - task: "Adjust line-breaking character limit from 25 to 30-32 characters"
     implemented: true
-    working: true
+    working: false
     file: "/app/frontend/src/components/EntityBox.jsx"
-    stuck_count: 0
+    stuck_count: 1
     priority: "high"
-    needs_retesting: false
+    needs_retesting: true
     status_history:
         - working: "NA"
         - agent: "main"
@@ -207,6 +207,20 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified the adjustment works perfectly. Tested with 'Edward Montgomery' (17 chars), 'Tech Holdings AB' (16 chars), and 'Tech Consultancy Group AB' (26 chars) - all remain on single lines. Long names still wrap properly with smart breaking."
+        - working: false
+        - agent: "user"
+        - comment: "User reported it didn't work. Issue likely with fixed 180px width preventing natural text flow."
+  - task: "Update entity box to use fit-content width with max-width 240px"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/EntityBox.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User reported previous solution didn't work. Requested to change from fixed 180px width to fit-content with max-width 240px to allow natural text flow while preventing overly wide boxes."
 
 metadata:
   created_by: "main_agent"
