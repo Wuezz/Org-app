@@ -20,6 +20,42 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
     onEdit(entity.id);
   };
 
+  // Function to break long names into multiple lines
+  const formatEntityName = (name) => {
+    if (name.length <= 25) {
+      return name;
+    }
+    
+    // Find a good break point (prefer space, then dash, then anywhere)
+    const words = name.split(' ');
+    let lines = [];
+    let currentLine = '';
+    
+    for (const word of words) {
+      if ((currentLine + ' ' + word).length <= 25) {
+        currentLine = currentLine ? currentLine + ' ' + word : word;
+      } else {
+        if (currentLine) {
+          lines.push(currentLine);
+          currentLine = word;
+        } else {
+          // Word itself is longer than 25 characters, force break
+          lines.push(word.substring(0, 25) + '-');
+          currentLine = word.substring(25);
+        }
+      }
+    }
+    
+    if (currentLine) {
+      lines.push(currentLine);
+    }
+    
+    return lines;
+  };
+
+  const nameLines = formatEntityName(entity.name);
+  const isMultiLine = Array.isArray(nameLines);
+
   return (
     <div
       className={`absolute transition-all duration-200 ${isDragging ? 'z-50' : 'z-10'}`}
@@ -48,7 +84,7 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
 
       {/* Entity Card */}
       <Card 
-        className={`p-4 cursor-move select-none transition-all duration-200 min-w-[180px] ${
+        className={`p-4 cursor-move select-none transition-all duration-200 w-[180px] ${
           isDragging 
             ? 'shadow-xl border-blue-300 bg-blue-50' 
             : 'shadow-md hover:shadow-lg border-gray-200 bg-white hover:bg-gray-50'
@@ -57,8 +93,8 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
         onDoubleClick={handleDoubleClick}
         title="Double-click to edit"
       >
-        <div className="flex items-center space-x-3">
-          <div className="flex-shrink-0">
+        <div className="flex items-start space-x-3">
+          <div className="flex-shrink-0 mt-1">
             {entity.type === 'company' ? (
               <div className="w-8 h-8 bg-blue-100 rounded-lg flex items-center justify-center">
                 <Factory className="h-5 w-5 text-blue-600" />
@@ -70,11 +106,21 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
             )}
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-gray-900 truncate">
-              {entity.name}
-            </h3>
+            {isMultiLine ? (
+              <div className="text-sm font-semibold text-gray-900">
+                {nameLines.map((line, index) => (
+                  <div key={index} className="leading-tight">
+                    {line}
+                  </div>
+                ))}
+              </div>
+            ) : (
+              <h3 className="text-sm font-semibold text-gray-900">
+                {nameLines}
+              </h3>
+            )}
             {entity.idNumber && (
-              <p className="text-xs text-gray-500 truncate">
+              <p className="text-xs text-gray-500 truncate mt-1">
                 ID: {entity.idNumber}
               </p>
             )}
