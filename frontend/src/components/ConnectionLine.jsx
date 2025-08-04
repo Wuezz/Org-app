@@ -10,7 +10,23 @@ const ConnectionLine = ({ connection, entities, onUpdatePercentage }) => {
 
   if (!fromEntity || !toEntity) return null;
 
-  // Function to calculate entity box height based on name length and content
+  // Function to estimate entity box width based on content
+  const estimateEntityWidth = (entity) => {
+    const MIN_WIDTH = 140;
+    const MAX_WIDTH = 240;
+    const CHAR_WIDTH = 7; // Approximate character width
+    const PADDING = 48; // Icon space + padding
+    
+    // Calculate text width based on name length
+    const nameWidth = entity.name.length * CHAR_WIDTH;
+    const idWidth = entity.idNumber ? entity.idNumber.length * 6 : 0;
+    
+    const estimatedWidth = Math.max(nameWidth, idWidth) + PADDING;
+    
+    return Math.min(Math.max(estimatedWidth, MIN_WIDTH), MAX_WIDTH);
+  };
+
+  // Function to calculate entity box height based on name length and content  
   const calculateEntityHeight = (entity) => {
     const baseHeight = 68; // Base height for single line content (padding + icon + text + id)
     const nameLineHeight = 16; // Height per line of text
@@ -24,15 +40,15 @@ const ConnectionLine = ({ connection, entities, onUpdatePercentage }) => {
   };
 
   // Calculate connection points (center of entities with dynamic dimensions)
-  const ENTITY_WIDTH = 180; // Fixed width as defined in EntityBox
-  
+  const fromWidth = estimateEntityWidth(fromEntity);
+  const toWidth = estimateEntityWidth(toEntity);
   const fromHeight = calculateEntityHeight(fromEntity);
   const toHeight = calculateEntityHeight(toEntity);
   
-  const fromX = fromEntity.position.x + ENTITY_WIDTH / 2; // Center X
-  const fromY = fromEntity.position.y + fromHeight / 2; // Center Y
-  const toX = toEntity.position.x + ENTITY_WIDTH / 2; // Center X
-  const toY = toEntity.position.y + toHeight / 2; // Center Y
+  const fromX = fromEntity.position.x + fromWidth / 2; // Dynamic center X
+  const fromY = fromEntity.position.y + fromHeight / 2; // Dynamic center Y
+  const toX = toEntity.position.x + toWidth / 2; // Dynamic center X
+  const toY = toEntity.position.y + toHeight / 2; // Dynamic center Y
 
   // Calculate midpoint for label
   const midX = (fromX + toX) / 2;
