@@ -1,0 +1,80 @@
+<analysis>
+The previous AI engineer successfully developed a full-stack web application for visual ownership hierarchy management, focusing primarily on a robust React frontend with local storage persistence. The development followed an iterative, user-centric approach, starting with a mock-data-driven frontend MVP and progressively adding complex features based on explicit user requests. Key enhancements included draggable entities with type icons, flexible connection lines with editable ownership percentages, comprehensive entity editing, canvas manipulation (zoom, pan), and an intelligent snap-to-alignment feature with a user-toggle. The export functionality evolved from an initial PDF to a high-quality image download, reflecting direct user feedback. The AI engineer demonstrated adaptability by correcting initial misinterpretations (e.g., canvas panning) and swiftly integrating new libraries () as needed, while ensuring UI/UX principles were met.
+</analysis>
+
+<product_requirements>
+The core requirement is a web application for creating and editing visual ownership hierarchies/organization charts. Users should be able to:
+- Create entities (person/company) with name and optional ID, represented as draggable boxes on a grid canvas.
+- Connect entities with lines, defining ownership percentages. Entities can have multiple owners and subsidiaries.
+- Rearrange entities freely on the canvas.
+- Support zooming and panning for large structures.
+- Export the diagram as a high-resolution image (PNG).
+- **Current implementation details:**
+    - Entity boxes include icons (factory for company, person for individual), name, and ID.
+    - Connection lines display ownership percentages, which are editable via an inline popup/input.
+    - Entities are editable (name, ID, type) by double-clicking a node, opening a dialog.
+    - Canvas supports zoom, pan (click-and-drag empty space), and reset.
+    - Snap-to-alignment feature with subtle guidelines (12px threshold) for horizontal/vertical alignment, with a toggle switch.
+    - Clear All button with confirmation to delete all data.
+    - Delete this entity button in the edit dialog, which also removes associated connections.
+    - All data is persisted in browser's localStorage; backend development was explicitly deferred.
+</product_requirements>
+
+<key_technical_concepts>
+- **Frontend**: React, React Router, Shadcn UI components, Tailwind CSS, LocalStorage for data persistence.
+- **Canvas Interaction**: Custom drag-and-drop logic for entities, pan/zoom functionality, snap-to-alignment.
+- **Image Export**:  for high-resolution canvas capture (PNG).
+- **Backend (Placeholder)**: FastAPI, MongoDB (not used by frontend for now).
+</key_technical_concepts>
+
+<code_architecture>
+The application follows a full-stack architecture with a React frontend and a FastAPI backend, though the current focus is entirely on the frontend with local storage.
+
+**Directory Structure:**
+craco start/build
+
+**Key Files and Changes:**
+-   : This is the main application file. Initially, it contained a simple home component with a backend Hello World call. It has been significantly refactored to:
+    -   Manage the application's state for entities, connections, zoom level, pan position, and snap-to-alignment preference.
+    -   Render the main canvas, entity boxes, and connection lines.
+    -   Integrate dialogs for adding and editing entities, and a confirmation dialog for clearing all data.
+    -   Implement drag-and-drop logic for entities, including the snap-to-alignment feature.
+    -   Handle canvas panning and zooming.
+    -   Incorporate export functionality (now image-only).
+    -   Utilize  for data persistence.
+-   : Provides a custom React hook for displaying toast notifications, used for user feedback (e.g., success messages, validation errors). This file remains largely as provided in the initial context.
+-   : Defines the FastAPI backend. It includes a basic root endpoint and MongoDB CRUD operations for status checks. This backend is currently not integrated with the frontend for the core hierarchy building functionality, as the user opted for local storage.
+-   : Manages frontend dependencies. Notable changes include the addition of  for image export, and the removal of  and  as per the user's updated export preference. It also lists  for client-side routing and  for API calls (though not currently used for the main app logic).
+-    & : These files define global styles and Tailwind CSS configurations, including custom color palettes and base layers, ensuring the application adheres to modern design principles.
+
+The frontend is a single-page application, heavily reliant on React state management for all interactive elements and data persistence via .
+</code_architecture>
+
+<pending_tasks>
+- Backend development to replace mock/localStorage data with a real database (MongoDB), which was explicitly deferred by the user.
+</pending_tasks>
+
+<current_work>
+The Visual Ownership Hierarchy Builder is currently a fully functional, single-page React application operating entirely on the frontend with data persistence managed by the browser's .
+
+**Current State of the Product:**
+-   **Entity Management**: Users can create new entities (persons or companies) with names and optional ID numbers. Each entity is represented by a draggable box with a relevant icon (person/factory).
+-   **Entity Editing**: Double-clicking an entity box opens a dialog allowing users to update its name, ID number, and entity type. A Delete Entity button within this dialog enables the removal of a single entity, along with all its associated connections.
+-   **Connection Management**: Entities can be linked via upward (owner) and downward (subsidiary) arrows. Connection lines visually represent these relationships.
+-   **Ownership Percentages**: A small label on each connection line displays the ownership percentage. Clicking this label brings up an inline input field, allowing users to edit the percentage (validated 0-100%).
+-   **Canvas Interaction**:
+    -   **Zooming**: Users can zoom in and out of the canvas to manage large hierarchies.
+    -   **Panning**: The canvas can be moved by clicking and dragging on any empty background area, providing easy navigation.
+    -   **Reset View**: A button is available to reset the canvas to its default zoom level and center position.
+-   **Snap-to-Alignment**: When dragging entities, subtle blue guidelines appear, enabling snap-to-grid like behavior for horizontal and vertical alignment with other entities (within a 12px threshold). This feature has been improved for smoother drag behavior and is now a gentle guide rather than forceful.
+-   **Snap Toggle**: A Snap to alignment toggle button in the UI allows users to enable or disable the snap feature, and this preference is remembered across sessions using .
+-   **Clear All**: A Clear All button with a confirmation dialog allows users to wipe all entities and connections from the canvas and , enabling a fresh start.
+-   **Export**: The application offers a Download Image option, which exports the entire visible canvas (including entities, lines, and percentages) as a high-resolution PNG image, ensuring an exact visual match to the on-screen display. PDF export functionality has been removed as per the user's latest instruction.
+-   **UX Nuances**: The application emphasizes a clean, minimalist design with smooth animations, clear visual feedback (e.g., cursor changes for panning, highlight on snap), and toast notifications for user actions and errors.
+
+The last task completed was the refinement of the snap-to-alignment feature and the addition of its toggle switch, making the drag-and-drop experience smoother and user-controllable.
+</current_work>
+
+<optional_next_step>
+There are no pending explicit user requests. The next step is to await further instructions from the user regarding new features or backend integration.
+</optional_next_step>
