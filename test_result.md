@@ -187,8 +187,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Update mock data entity names and IDs"
-    - "Update app title from Ownership Hierarchy Builder to Ownership & Org Chart Tool"
+    - "Fix connection lines to connect to center of node boxes"
+    - "Add automatic line breaks for long entity names"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
