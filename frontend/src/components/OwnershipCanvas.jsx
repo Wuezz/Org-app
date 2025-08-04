@@ -25,6 +25,10 @@ const OwnershipCanvas = () => {
   const [snapGuides, setSnapGuides] = useState({ horizontal: [], vertical: [] });
   const [isSnapping, setIsSnapping] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
+  const [snapToAlignment, setSnapToAlignment] = useState(() => {
+    const saved = localStorage.getItem('snapToAlignment');
+    return saved !== null ? JSON.parse(saved) : true;
+  });
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [newEntity, setNewEntity] = useState({ name: '', id: '', type: 'company' });
   const [parentEntity, setParentEntity] = useState(null);
