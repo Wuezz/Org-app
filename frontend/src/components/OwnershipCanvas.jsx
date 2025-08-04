@@ -394,41 +394,6 @@ const OwnershipCanvas = () => {
     }
   };
 
-  const exportToPDF = async () => {
-    try {
-      const dataUrl = await captureCanvasAsImage();
-      
-      // Create PDF
-      const pdf = new jsPDF({
-        orientation: 'landscape',
-        unit: 'px',
-        format: [1200, 800]
-      });
-
-      // Add title
-      pdf.setFontSize(16);
-      pdf.setTextColor(0, 0, 0);
-      pdf.text('Ownership Hierarchy Diagram', 20, 30);
-
-      // Calculate image dimensions to fit in PDF
-      const imgWidth = 1160; // Leave margins
-      const imgHeight = 720; // Leave space for title
-      
-      // Add the captured image
-      pdf.addImage(dataUrl, 'PNG', 20, 50, imgWidth, imgHeight);
-
-      // Save the PDF
-      pdf.save('ownership-hierarchy.pdf');
-      
-      toast({
-        title: "Success",
-        description: "High-quality PDF exported successfully"
-      });
-    } catch (error) {
-      // Error already handled in captureCanvasAsImage
-    }
-  };
-
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header */}
