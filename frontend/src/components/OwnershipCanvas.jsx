@@ -51,11 +51,10 @@ const OwnershipCanvas = () => {
     }
   }, []);
 
-  // Save data to localStorage whenever entities or connections change
+  // Save snap preference to localStorage
   useEffect(() => {
-    const dataToSave = { entities, connections };
-    localStorage.setItem('ownershipData', JSON.stringify(dataToSave));
-  }, [entities, connections]);
+    localStorage.setItem('snapToAlignment', JSON.stringify(snapToAlignment));
+  }, [snapToAlignment]);
 
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev * 1.2, 3));
