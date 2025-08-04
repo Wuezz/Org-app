@@ -211,16 +211,22 @@ frontend:
         - agent: "user"
         - comment: "User reported it didn't work. Issue likely with fixed 180px width preventing natural text flow."
   - task: "Update entity box to use fit-content width with max-width 240px"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/EntityBox.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "User reported previous solution didn't work. Requested to change from fixed 180px width to fit-content with max-width 240px to allow natural text flow while preventing overly wide boxes."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Updated EntityBox.jsx to use w-fit max-w-[240px] min-w-[140px] classes. Updated ConnectionLine.jsx and OwnershipCanvas.jsx with width estimation functions to maintain centered lines and proper snap alignment."
+        - working: true
+        - agent: "main"
+        - comment: "Verified the solution works perfectly. Entity boxes now have variable widths (e.g., 216px vs 240px) based on content. Medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' stay on single lines. Long names wrap gracefully. Connection lines remain properly centered."
 
 metadata:
   created_by: "main_agent"
