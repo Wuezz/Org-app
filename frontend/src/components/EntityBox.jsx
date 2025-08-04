@@ -3,7 +3,7 @@ import { Card } from './ui/card';
 import { Button } from './ui/button';
 import { Factory, User, ArrowUp, ArrowDown } from 'lucide-react';
 
-const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, isDragging }) => {
+const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, isDragging }) => {
   const handleMouseDown = (e) => {
     e.preventDefault();
     const rect = e.currentTarget.getBoundingClientRect();
@@ -12,6 +12,12 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, isDraggin
       y: e.clientY - rect.top
     };
     onDragStart(entity.id, { x: entity.position.x + mousePos.x, y: entity.position.y + mousePos.y });
+  };
+
+  const handleDoubleClick = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    onEdit(entity.id);
   };
 
   return (
