@@ -321,57 +321,84 @@ const OwnershipCanvas = () => {
     });
   };
 
-  const exportToPDF = async () => {
+  const captureCanvasAsImage = async () => {
     try {
-      // Hide snap guides during export
+      setIsExporting(true);
+      
+      // Hide snap guides and add/edit arrows during export
       setSnapGuides({ horizontal: [], vertical: [] });
       setIsSnapping(false);
       
-      // Get the canvas element
       const canvasElement = canvasRef.current;
       if (!canvasElement) {
-        toast({
-          title: "Error",
-          description: "Canvas not found for export",
-          variant: "destructive"
-        });
-        return;
+        throw new Error('Canvas element not found');
       }
 
-      // Create a temporary container with white background for export
-      const exportContainer = document.createElement('div');
-      exportContainer.style.position = 'fixed';
-      exportContainer.style.top = '-9999px';
-      exportContainer.style.left = '-9999px';
-      exportContainer.style.width = '1200px';
-      exportContainer.style.height = '800px';
-      exportContainer.style.backgroundColor = '#ffffff';
-      exportContainer.style.padding = '20px';
-      exportContainer.style.fontFamily = canvasElement.style.fontFamily || 'inherit';
-      
-      // Clone the canvas content
-      const clonedCanvas = canvasElement.cloneNode(true);
-      clonedCanvas.style.transform = `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`;
-      clonedCanvas.style.transformOrigin = '0 0';
-      clonedCanvas.style.width = '100%';
-      clonedCanvas.style.height = '100%';
-      
-      exportContainer.appendChild(clonedCanvas);
-      document.body.appendChild(exportContainer);
+      // Wait a moment for UI updates to complete
+      await new Promise(resolve => setTimeout(resolve, 100));
 
-      // Capture the canvas with html2canvas
-      const canvas = await html2canvas(exportContainer, {
-        backgroundColor: '#ffffff',
-        scale: 2, // Higher resolution
-        useCORS: true,
-        allowTaint: true,
-        width: 1200,
-        height: 800
+      // Capture the canvas with high resolution
+      const dataUrl = await domtoimage.toPng(canvasElement, {
+        quality: 1.0,
+        width: canvasElement.offsetWidth,
+        height: canvasElement.offsetHeight,
+        style: {
+          transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
+          transformOrigin: '0 0'
+        },
+        // Filter out add/edit buttons
+        filter: (node) => {
+          // Hide add owner/subsidiary buttons during export
+          if (node.classList && (
+            node.classList.contains('add-owner-btn') || 
+            node.classList.contains('add-subsidiary-btn')
+          )) {
+            return false;
+          }
+          return true;
+        },
+        scale: 3 // 3x resolution for high quality
       });
 
-      // Remove temporary container
-      document.body.removeChild(exportContainer);
+      setIsExporting(false);
+      return dataUrl;
+    } catch (error) {
+      setIsExporting(false);
+      console.error('Error capturing canvas:', error);
+      toast({
+        title: "Error",
+        description: "Failed to capture canvas. Please try again.",
+        variant: "destructive"
+      });
+      throw error;
+    }
+  };
 
+  const downloadAsImage = async () => {
+    try {
+      const dataUrl = await captureCanvasAsImage();
+      
+      // Create download link
+      const link = document.createElement('a');
+      link.download = 'ownership-hierarchy.png';
+      link.href = dataUrl;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      
+      toast({
+        title: "Success",
+        description: "Image downloaded successfully"
+      });
+    } catch (error) {
+      // Error already handled in captureCanvasAsImage
+    }
+  };
+
+  const exportToPDF = async () => {
+    try {
+      const dataUrl = await captureCanvasAsImage();
+      
       // Create PDF
       const pdf = new jsPDF({
         orientation: 'landscape',
@@ -384,9 +411,12 @@ const OwnershipCanvas = () => {
       pdf.setTextColor(0, 0, 0);
       pdf.text('Ownership Hierarchy Diagram', 20, 30);
 
-      // Add the canvas image
-      const imgData = canvas.toDataURL('image/png');
-      pdf.addImage(imgData, 'PNG', 0, 40, 1200, 760);
+      // Calculate image dimensions to fit in PDF
+      const imgWidth = 1160; // Leave margins
+      const imgHeight = 720; // Leave space for title
+      
+      // Add the captured image
+      pdf.addImage(dataUrl, 'PNG', 20, 50, imgWidth, imgHeight);
 
       // Save the PDF
       pdf.save('ownership-hierarchy.pdf');
@@ -396,12 +426,7 @@ const OwnershipCanvas = () => {
         description: "High-quality PDF exported successfully"
       });
     } catch (error) {
-      console.error('PDF export error:', error);
-      toast({
-        title: "Error",
-        description: "Failed to export PDF. Please try again.",
-        variant: "destructive"
-      });
+      // Error already handled in captureCanvasAsImage
     }
   };
 
