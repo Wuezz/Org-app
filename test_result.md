@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: Remove the 'Made with Emergent' button located on the bottom right of the app
+user_problem_statement: 1. Mock data updates - Keep John Smith with ID 19750720-4578, rename Tech Holdings LLC to Tech Holdings AB with ID 559245-4937, rename Acme Corporation to Tech Consultancy Group AB with ID 559378-9341, rename Innovation Labs to Innovation Chart LLC with ID C716984. 2. App title - change from "Ownership Hierarchy Builder" to "Ownership & Org Chart Tool"
 
 frontend:
   - task: "Remove Emergent badge from bottom right corner"
@@ -122,6 +122,28 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified removal successful after frontend restart. Button no longer appears on the page and main app functionality remains intact."
+  - task: "Update mock data entity names and IDs"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/utils/mockData.js"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested updates to mock data: Keep John Smith (ID: 19750720-4578), rename Tech Holdings LLC to Tech Holdings AB (ID: 559245-4937), rename Acme Corporation to Tech Consultancy Group AB (ID: 559378-9341), rename Innovation Labs to Innovation Chart LLC (ID: C716984)."
+  - task: "Update app title from Ownership Hierarchy Builder to Ownership & Org Chart Tool"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested app title change from 'Ownership Hierarchy Builder' to 'Ownership & Org Chart Tool'."
 
 metadata:
   created_by: "main_agent"
