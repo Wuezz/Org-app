@@ -23,6 +23,9 @@ const OwnershipCanvas = () => {
   const [newEntity, setNewEntity] = useState({ name: '', id: '', type: 'company' });
   const [parentEntity, setParentEntity] = useState(null);
   const [connectionType, setConnectionType] = useState('owner'); // 'owner' or 'subsidiary'
+  const [showEditEntityDialog, setShowEditEntityDialog] = useState(false);
+  const [editingEntity, setEditingEntity] = useState(null);
+  const [editEntityData, setEditEntityData] = useState({ name: '', id: '', type: 'company' });
   
   const canvasRef = useRef(null);
   const { toast } = useToast();
