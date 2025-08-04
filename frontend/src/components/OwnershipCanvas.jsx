@@ -145,6 +145,8 @@ const OwnershipCanvas = () => {
   const handleEntityDragEnd = useCallback(() => {
     setDraggedEntity(null);
     setDragOffset({ x: 0, y: 0 });
+    setSnapGuides({ horizontal: [], vertical: [] });
+    setIsSnapping(false);
   }, []);
 
   const handleCanvasMouseDown = useCallback((e) => {
