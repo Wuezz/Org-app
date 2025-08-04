@@ -156,6 +156,28 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified title change successful. App now displays 'Ownership & Org Chart Tool' as the main heading."
+  - task: "Fix connection lines to connect to center of node boxes"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/ConnectionLine.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested that connection lines always originate from and point to the center of each node box, regardless of box width or content."
+  - task: "Add automatic line breaks for long entity names"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/EntityBox.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested automatic line breaks for entity names longer than ~25 characters to prevent boxes from becoming excessively wide and maintain consistent box sizes."
 
 metadata:
   created_by: "main_agent"
