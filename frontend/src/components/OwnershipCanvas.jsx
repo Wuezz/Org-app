@@ -402,6 +402,7 @@ const OwnershipCanvas = () => {
               key={connection.id}
               connection={connection}
               entities={entities}
+              onUpdatePercentage={handleUpdatePercentage}
             />
           ))}
 
@@ -413,6 +414,7 @@ const OwnershipCanvas = () => {
               onDragStart={handleEntityDragStart}
               onAddOwner={(id) => handleAddEntity(id, 'owner')}
               onAddSubsidiary={(id) => handleAddEntity(id, 'subsidiary')}
+              onEdit={handleEditEntity}
               isDragging={draggedEntity === entity.id}
             />
           ))}
