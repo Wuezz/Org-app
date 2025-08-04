@@ -124,11 +124,11 @@ frontend:
         - comment: "Verified removal successful after frontend restart. Button no longer appears on the page and main app functionality remains intact."
   - task: "Update mock data entity names and IDs"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/utils/mockData.js"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
@@ -136,13 +136,16 @@ frontend:
         - working: "NA"
         - agent: "main"
         - comment: "Successfully updated all entity names and IDs in mockData.js according to user specifications."
+        - working: true
+        - agent: "main"
+        - comment: "Verified mock data changes successful. All entity names and ID numbers are correctly displayed in the app after clearing localStorage and reloading."
   - task: "Update app title from Ownership Hierarchy Builder to Ownership & Org Chart Tool"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/OwnershipCanvas.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
@@ -150,6 +153,9 @@ frontend:
         - working: "NA"
         - agent: "main"
         - comment: "Successfully updated the app title in OwnershipCanvas.jsx line 420."
+        - working: true
+        - agent: "main"
+        - comment: "Verified title change successful. App now displays 'Ownership & Org Chart Tool' as the main heading."
 
 metadata:
   created_by: "main_agent"
