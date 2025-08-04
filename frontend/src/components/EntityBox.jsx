@@ -87,7 +87,9 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
         <Button
           size="sm"
           variant="outline"
-          className="h-6 w-6 p-0 bg-white shadow-md hover:bg-green-50 hover:border-green-300"
+          className={`h-6 w-6 p-0 bg-white shadow-md hover:bg-green-50 hover:border-green-300 add-subsidiary-btn ${
+            isDragging ? 'opacity-0 pointer-events-none' : ''
+          }`}
           onClick={(e) => {
             e.stopPropagation();
             onAddSubsidiary(entity.id);
