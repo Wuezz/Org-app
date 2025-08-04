@@ -153,7 +153,8 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Remove Emergent badge from bottom right corner"
+    - "Update mock data entity names and IDs"
+    - "Update app title from Ownership Hierarchy Builder to Ownership & Org Chart Tool"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
@@ -163,3 +164,5 @@ agent_communication:
     - message: "Found the Made with Emergent button in /app/frontend/public/index.html at lines 36-82. Will remove this element to fulfill user request."
     - agent: "main"
     - message: "Successfully completed the task. Removed the entire <a> tag containing the Made with Emergent badge from the HTML file and restarted frontend service. Verified through screenshot that the button is no longer visible and main app functionality remains intact."
+    - agent: "main"
+    - message: "New user request to update mock data and app title. Will locate mockData file and OwnershipCanvas component to make the required changes."
