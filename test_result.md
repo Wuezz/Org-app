@@ -210,8 +210,7 @@ metadata:
 
 test_plan:
   current_focus:
-    - "Fix connection lines to connect to center of node boxes"
-    - "Add automatic line breaks for long entity names"
+    - "Adjust line-breaking character limit from 25 to 30-32 characters"
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
