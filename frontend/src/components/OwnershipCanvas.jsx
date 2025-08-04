@@ -97,6 +97,59 @@ const OwnershipCanvas = () => {
     setShowAddDialog(true);
   };
 
+  const handleEditEntity = (entityId) => {
+    const entity = entities.find(e => e.id === entityId);
+    if (entity) {
+      setEditingEntity(entityId);
+      setEditEntityData({
+        name: entity.name,
+        id: entity.idNumber || '',
+        type: entity.type
+      });
+      setShowEditEntityDialog(true);
+    }
+  };
+
+  const handleUpdateEntity = () => {
+    if (!editEntityData.name.trim()) {
+      toast({
+        title: "Error",
+        description: "Entity name is required",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    setEntities(prev => prev.map(entity => 
+      entity.id === editingEntity 
+        ? {
+            ...entity,
+            name: editEntityData.name,
+            idNumber: editEntityData.id,
+            type: editEntityData.type
+          }
+        : entity
+    ));
+
+    setShowEditEntityDialog(false);
+    setEditingEntity(null);
+    setEditEntityData({ name: '', id: '', type: 'company' });
+    
+    toast({
+      title: "Success",
+      description: "Entity updated successfully"
+    });
+  };
+
+  const handleUpdatePercentage = (connectionId, newPercentage) => {
+    const percentage = Math.max(0, Math.min(100, parseInt(newPercentage) || 0));
+    setConnections(prev => prev.map(conn => 
+      conn.id === connectionId 
+        ? { ...conn, percentage }
+        : conn
+    ));
+  };
+
   const createEntity = () => {
     if (!newEntity.name.trim()) {
       toast({
