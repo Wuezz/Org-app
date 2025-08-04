@@ -235,3 +235,5 @@ agent_communication:
     - message: "Successfully completed layout improvements: 1) Updated ConnectionLine.jsx to dynamically calculate entity heights and connect lines to true center of boxes, 2) Updated EntityBox.jsx with automatic text wrapping for names >25 chars and fixed box width to 180px, 3) Updated OwnershipCanvas.jsx snap logic to account for dynamic heights. All changes tested and working correctly."
     - agent: "main"
     - message: "New user request to adjust line-breaking behavior: increase character limit from ~25 to ~30-32 characters to reduce unnecessary wrapping for medium-length names while maintaining smart wrapping for truly long names."
+    - agent: "main"
+    - message: "Successfully updated character limit to 32 characters across all components (EntityBox.jsx, ConnectionLine.jsx, OwnershipCanvas.jsx). Verified that medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' now remain on single lines while very long names still wrap appropriately. All functionality preserved."
