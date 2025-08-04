@@ -86,7 +86,7 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
 
       {/* Entity Card */}
       <Card 
-        className={`p-4 cursor-move select-none transition-all duration-200 w-[180px] ${
+        className={`p-4 cursor-move select-none transition-all duration-200 w-fit max-w-[240px] min-w-[140px] ${
           isDragging 
             ? 'shadow-xl border-blue-300 bg-blue-50' 
             : 'shadow-md hover:shadow-lg border-gray-200 bg-white hover:bg-gray-50'
