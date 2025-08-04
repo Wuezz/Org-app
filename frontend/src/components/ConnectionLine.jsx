@@ -14,9 +14,10 @@ const ConnectionLine = ({ connection, entities, onUpdatePercentage }) => {
   const calculateEntityHeight = (entity) => {
     const baseHeight = 68; // Base height for single line content (padding + icon + text + id)
     const nameLineHeight = 16; // Height per line of text
+    const CHARACTER_LIMIT = 32; // Updated to match EntityBox
     
     // Calculate how many lines the name will take
-    const nameLines = entity.name.length <= 25 ? 1 : Math.ceil(entity.name.length / 25);
+    const nameLines = entity.name.length <= CHARACTER_LIMIT ? 1 : Math.ceil(entity.name.length / CHARACTER_LIMIT);
     const additionalHeight = (nameLines - 1) * nameLineHeight;
     
     return baseHeight + additionalHeight;
