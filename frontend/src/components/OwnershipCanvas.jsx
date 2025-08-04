@@ -532,6 +532,41 @@ const OwnershipCanvas = () => {
             }}
           />
 
+          {/* Snap Guidelines */}
+          {isSnapping && (
+            <div className="absolute inset-0 pointer-events-none z-20">
+              {/* Horizontal snap guides */}
+              {snapGuides.horizontal.map((guide, index) => (
+                <div
+                  key={`h-${index}`}
+                  className="absolute bg-blue-500 opacity-70 animate-pulse"
+                  style={{
+                    left: guide.x1,
+                    top: guide.y - 1,
+                    width: guide.x2 - guide.x1,
+                    height: 2,
+                    transition: 'opacity 0.2s ease-in-out'
+                  }}
+                />
+              ))}
+              
+              {/* Vertical snap guides */}
+              {snapGuides.vertical.map((guide, index) => (
+                <div
+                  key={`v-${index}`}
+                  className="absolute bg-blue-500 opacity-70 animate-pulse"
+                  style={{
+                    left: guide.x - 1,
+                    top: guide.y1,
+                    width: 2,
+                    height: guide.y2 - guide.y1,
+                    transition: 'opacity 0.2s ease-in-out'
+                  }}
+                />
+              ))}
+            </div>
+          )}
+
           {/* Connection Lines */}
           {connections.map(connection => (
             <ConnectionLine 
