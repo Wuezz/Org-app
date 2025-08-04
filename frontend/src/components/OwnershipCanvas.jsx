@@ -239,6 +239,39 @@ const OwnershipCanvas = () => {
     ));
   };
 
+  const handleDeleteEntity = () => {
+    if (!editingEntity) return;
+
+    // Remove the entity
+    setEntities(prev => prev.filter(entity => entity.id !== editingEntity));
+    
+    // Remove all connections involving this entity
+    setConnections(prev => prev.filter(conn => 
+      conn.from !== editingEntity && conn.to !== editingEntity
+    ));
+
+    setShowEditEntityDialog(false);
+    setEditingEntity(null);
+    setEditEntityData({ name: '', id: '', type: 'company' });
+    
+    toast({
+      title: "Success",
+      description: "Entity deleted successfully"
+    });
+  };
+
+  const handleClearAll = () => {
+    setEntities([]);
+    setConnections([]);
+    setShowClearAllDialog(false);
+    localStorage.removeItem('ownershipData');
+    
+    toast({
+      title: "Success",
+      description: "All entities cleared successfully"
+    });
+  };
+
   const createEntity = () => {
     if (!newEntity.name.trim()) {
       toast({
