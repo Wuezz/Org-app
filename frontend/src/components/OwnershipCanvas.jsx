@@ -52,9 +52,15 @@ const OwnershipCanvas = () => {
     localStorage.setItem('snapToAlignment', JSON.stringify(snapToAlignment));
   }, [snapToAlignment]);
 
-  const handleZoomIn = () => {
-    setZoom(prev => Math.min(prev * 1.2, 3));
-  };
+  // Load data from localStorage on mount
+  useEffect(() => {
+    const savedData = localStorage.getItem('ownershipData');
+    if (savedData) {
+      const parsed = JSON.parse(savedData);
+      setEntities(parsed.entities || mockData.entities);
+      setConnections(parsed.connections || mockData.connections);
+    }
+  }, []);
 
   const handleZoomOut = () => {
     setZoom(prev => Math.max(prev / 1.2, 0.3));
