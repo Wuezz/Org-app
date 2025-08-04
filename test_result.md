@@ -215,8 +215,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Adjust line-breaking character limit from 25 to 30-32 characters"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
