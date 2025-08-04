@@ -22,7 +22,9 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
 
   // Function to break long names into multiple lines
   const formatEntityName = (name) => {
-    if (name.length <= 25) {
+    const CHARACTER_LIMIT = 32; // Increased from 25 to 32 characters
+    
+    if (name.length <= CHARACTER_LIMIT) {
       return name;
     }
     
@@ -32,16 +34,16 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
     let currentLine = '';
     
     for (const word of words) {
-      if ((currentLine + ' ' + word).length <= 25) {
+      if ((currentLine + ' ' + word).length <= CHARACTER_LIMIT) {
         currentLine = currentLine ? currentLine + ' ' + word : word;
       } else {
         if (currentLine) {
           lines.push(currentLine);
           currentLine = word;
         } else {
-          // Word itself is longer than 25 characters, force break
-          lines.push(word.substring(0, 25) + '-');
-          currentLine = word.substring(25);
+          // Word itself is longer than CHARACTER_LIMIT, force break
+          lines.push(word.substring(0, CHARACTER_LIMIT) + '-');
+          currentLine = word.substring(CHARACTER_LIMIT);
         }
       }
     }
