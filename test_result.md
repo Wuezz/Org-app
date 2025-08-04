@@ -216,3 +216,5 @@ agent_communication:
     - message: "Successfully completed both tasks: 1) Updated mock data in /app/frontend/src/utils/mockData.js with new entity names and IDs, 2) Changed app title in OwnershipCanvas.jsx from 'Ownership Hierarchy Builder' to 'Ownership & Org Chart Tool'. Verified all changes working correctly through screenshot testing."
     - agent: "main"
     - message: "New user request for layout improvements: 1) Fix connection lines to always connect to center of node boxes, 2) Add automatic line breaks for long entity names (>25 chars). Will examine ConnectionLine.jsx and EntityBox.jsx components."
+    - agent: "main"
+    - message: "Successfully completed layout improvements: 1) Updated ConnectionLine.jsx to dynamically calculate entity heights and connect lines to true center of boxes, 2) Updated EntityBox.jsx with automatic text wrapping for names >25 chars and fixed box width to 180px, 3) Updated OwnershipCanvas.jsx snap logic to account for dynamic heights. All changes tested and working correctly."
