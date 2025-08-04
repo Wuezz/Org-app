@@ -161,20 +161,6 @@ const OwnershipCanvas = () => {
           }
         }
       }
-          const xDistance = Math.abs(draggedCenterX - entityCenterX);
-          
-          if (xDistance <= SNAP_THRESHOLD) {
-            snappedX = entity.position.x;
-            verticalGuides.push({
-              x: entityCenterX,
-              y1: Math.min(entity.position.y, newY) - 50,
-              y2: Math.max(entity.position.y + ENTITY_HEIGHT, newY + ENTITY_HEIGHT) + 50
-            });
-            hasSnapped = true;
-            break; // Only snap to the closest alignment
-          }
-        }
-      }
       
       // Update snap guides only when snapping is active
       setSnapGuides({ horizontal: horizontalGuides, vertical: verticalGuides });
