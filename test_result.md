@@ -202,3 +202,5 @@ agent_communication:
     - message: "New user request to update mock data and app title. Will locate mockData file and OwnershipCanvas component to make the required changes."
     - agent: "main"
     - message: "Successfully completed both tasks: 1) Updated mock data in /app/frontend/src/utils/mockData.js with new entity names and IDs, 2) Changed app title in OwnershipCanvas.jsx from 'Ownership Hierarchy Builder' to 'Ownership & Org Chart Tool'. Verified all changes working correctly through screenshot testing."
+    - agent: "main"
+    - message: "New user request for layout improvements: 1) Fix connection lines to always connect to center of node boxes, 2) Add automatic line breaks for long entity names (>25 chars). Will examine ConnectionLine.jsx and EntityBox.jsx components."
