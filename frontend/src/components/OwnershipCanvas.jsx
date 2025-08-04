@@ -21,6 +21,8 @@ const OwnershipCanvas = () => {
   const [dragOffset, setDragOffset] = useState({ x: 0, y: 0 });
   const [isPanning, setIsPanning] = useState(false);
   const [panStart, setPanStart] = useState({ x: 0, y: 0 });
+  const [snapGuides, setSnapGuides] = useState({ horizontal: [], vertical: [] });
+  const [isSnapping, setIsSnapping] = useState(false);
   const [showAddDialog, setShowAddDialog] = useState(false);
   const [newEntity, setNewEntity] = useState({ name: '', id: '', type: 'company' });
   const [parentEntity, setParentEntity] = useState(null);
