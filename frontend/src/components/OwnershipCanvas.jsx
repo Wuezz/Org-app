@@ -90,7 +90,18 @@ const OwnershipCanvas = () => {
     if (draggedEntity) {
       const SNAP_THRESHOLD = 12; // pixels
       const ENTITY_WIDTH = 180;
-      const ENTITY_HEIGHT = 80;
+      
+      // Function to calculate entity box height based on name length and content
+      const calculateEntityHeight = (entity) => {
+        const baseHeight = 68; // Base height for single line content (padding + icon + text + id)
+        const nameLineHeight = 16; // Height per line of text
+        
+        // Calculate how many lines the name will take
+        const nameLines = entity.name.length <= 25 ? 1 : Math.ceil(entity.name.length / 25);
+        const additionalHeight = (nameLines - 1) * nameLineHeight;
+        
+        return baseHeight + additionalHeight;
+      };
       
       // Default to following mouse position exactly
       let newX = mousePos.x - dragOffset.x;
@@ -105,15 +116,20 @@ const OwnershipCanvas = () => {
       // Only apply snapping if enabled and within threshold
       if (snapToAlignment) {
         const otherEntities = entities.filter(e => e.id !== draggedEntity);
+        const draggedEntityData = entities.find(e => e.id === draggedEntity);
         
         // Check for horizontal alignment (same Y position)
         for (const entity of otherEntities) {
-          const entityCenterY = entity.position.y + ENTITY_HEIGHT / 2;
-          const draggedCenterY = newY + ENTITY_HEIGHT / 2;
+          const entityHeight = calculateEntityHeight(entity);
+          const draggedHeight = calculateEntityHeight(draggedEntityData);
+          
+          const entityCenterY = entity.position.y + entityHeight / 2;
+          const draggedCenterY = newY + draggedHeight / 2;
           const yDistance = Math.abs(draggedCenterY - entityCenterY);
           
           if (yDistance <= SNAP_THRESHOLD) {
-            snappedY = entity.position.y;
+            // Align the centers by adjusting the position
+            snappedY = entity.position.y + (entityHeight - draggedHeight) / 2;
             horizontalGuides.push({
               y: entityCenterY,
               x1: Math.min(entity.position.x, newX) - 50,
@@ -126,8 +142,25 @@ const OwnershipCanvas = () => {
         
         // Check for vertical alignment (same X position)
         for (const entity of otherEntities) {
+          const entityHeight = calculateEntityHeight(entity);
+          const draggedHeight = calculateEntityHeight(draggedEntityData);
+          
           const entityCenterX = entity.position.x + ENTITY_WIDTH / 2;
           const draggedCenterX = newX + ENTITY_WIDTH / 2;
+          const xDistance = Math.abs(draggedCenterX - entityCenterX);
+          
+          if (xDistance <= SNAP_THRESHOLD) {
+            snappedX = entity.position.x;
+            verticalGuides.push({
+              x: entityCenterX,
+              y1: Math.min(entity.position.y, newY) - 50,
+              y2: Math.max(entity.position.y + entityHeight, newY + draggedHeight) + 50
+            });
+            hasSnapped = true;
+            break; // Only snap to the closest alignment
+          }
+        }
+      }
           const xDistance = Math.abs(draggedCenterX - entityCenterX);
           
           if (xDistance <= SNAP_THRESHOLD) {
