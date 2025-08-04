@@ -448,6 +448,15 @@ const OwnershipCanvas = () => {
                 <RotateCcw className="h-4 w-4" />
               </Button>
             </div>
+
+            <div className="flex items-center space-x-2 border-l pl-4">
+              <Grid3X3 className="h-4 w-4 text-gray-600" />
+              <span className="text-sm text-gray-600">Snap to alignment</span>
+              <Switch
+                checked={snapToAlignment}
+                onCheckedChange={setSnapToAlignment}
+              />
+            </div>
             
             <Dialog open={showAddDialog} onOpenChange={setShowAddDialog}>
               <DialogTrigger asChild>
