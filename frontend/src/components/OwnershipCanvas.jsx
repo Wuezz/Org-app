@@ -92,54 +92,62 @@ const OwnershipCanvas = () => {
       const ENTITY_WIDTH = 180;
       const ENTITY_HEIGHT = 80;
       
+      // Default to following mouse position exactly
       let newX = mousePos.x - dragOffset.x;
       let newY = mousePos.y - dragOffset.y;
       
-      // Get all other entities for snapping
-      const otherEntities = entities.filter(e => e.id !== draggedEntity);
       const horizontalGuides = [];
       const verticalGuides = [];
       let snappedX = newX;
       let snappedY = newY;
       let hasSnapped = false;
       
-      // Check for horizontal alignment (same Y position)
-      for (const entity of otherEntities) {
-        const entityCenterY = entity.position.y + ENTITY_HEIGHT / 2;
-        const draggedCenterY = newY + ENTITY_HEIGHT / 2;
+      // Only apply snapping if enabled and within threshold
+      if (snapToAlignment) {
+        const otherEntities = entities.filter(e => e.id !== draggedEntity);
         
-        if (Math.abs(draggedCenterY - entityCenterY) <= SNAP_THRESHOLD) {
-          snappedY = entity.position.y;
-          horizontalGuides.push({
-            y: entityCenterY,
-            x1: Math.min(entity.position.x, newX) - 50,
-            x2: Math.max(entity.position.x + ENTITY_WIDTH, newX + ENTITY_WIDTH) + 50
-          });
-          hasSnapped = true;
+        // Check for horizontal alignment (same Y position)
+        for (const entity of otherEntities) {
+          const entityCenterY = entity.position.y + ENTITY_HEIGHT / 2;
+          const draggedCenterY = newY + ENTITY_HEIGHT / 2;
+          const yDistance = Math.abs(draggedCenterY - entityCenterY);
+          
+          if (yDistance <= SNAP_THRESHOLD) {
+            snappedY = entity.position.y;
+            horizontalGuides.push({
+              y: entityCenterY,
+              x1: Math.min(entity.position.x, newX) - 50,
+              x2: Math.max(entity.position.x + ENTITY_WIDTH, newX + ENTITY_WIDTH) + 50
+            });
+            hasSnapped = true;
+            break; // Only snap to the closest alignment
+          }
+        }
+        
+        // Check for vertical alignment (same X position)
+        for (const entity of otherEntities) {
+          const entityCenterX = entity.position.x + ENTITY_WIDTH / 2;
+          const draggedCenterX = newX + ENTITY_WIDTH / 2;
+          const xDistance = Math.abs(draggedCenterX - entityCenterX);
+          
+          if (xDistance <= SNAP_THRESHOLD) {
+            snappedX = entity.position.x;
+            verticalGuides.push({
+              x: entityCenterX,
+              y1: Math.min(entity.position.y, newY) - 50,
+              y2: Math.max(entity.position.y + ENTITY_HEIGHT, newY + ENTITY_HEIGHT) + 50
+            });
+            hasSnapped = true;
+            break; // Only snap to the closest alignment
+          }
         }
       }
       
-      // Check for vertical alignment (same X position)
-      for (const entity of otherEntities) {
-        const entityCenterX = entity.position.x + ENTITY_WIDTH / 2;
-        const draggedCenterX = newX + ENTITY_WIDTH / 2;
-        
-        if (Math.abs(draggedCenterX - entityCenterX) <= SNAP_THRESHOLD) {
-          snappedX = entity.position.x;
-          verticalGuides.push({
-            x: entityCenterX,
-            y1: Math.min(entity.position.y, newY) - 50,
-            y2: Math.max(entity.position.y + ENTITY_HEIGHT, newY + ENTITY_HEIGHT) + 50
-          });
-          hasSnapped = true;
-        }
-      }
-      
-      // Update snap guides
+      // Update snap guides only when snapping is active
       setSnapGuides({ horizontal: horizontalGuides, vertical: verticalGuides });
-      setIsSnapping(hasSnapped);
+      setIsSnapping(snapToAlignment && hasSnapped);
       
-      // Update entity position
+      // Update entity position (snapped or original mouse position)
       setEntities(prev => prev.map(entity => 
         entity.id === draggedEntity 
           ? { 
@@ -152,7 +160,7 @@ const OwnershipCanvas = () => {
           : entity
       ));
     }
-  }, [draggedEntity, dragOffset, entities]);
+  }, [draggedEntity, dragOffset, entities, snapToAlignment]);
 
   const handleEntityDragEnd = useCallback(() => {
     setDraggedEntity(null);
