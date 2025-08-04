@@ -9,7 +9,7 @@ export const mockData = {
     },
     {
       id: '2',
-      name: 'Edward Montgomery',
+      name: 'John Smith',
       idNumber: '19750720-4578',
       type: 'person',
       position: { x: 200, y: 150 }
@@ -23,7 +23,7 @@ export const mockData = {
     },
     {
       id: '4',
-      name: 'Innovation Chart LLC with Extended Business Name Corporation',
+      name: 'Innovation Chart LLC',
       idNumber: 'C716984',
       type: 'company',
       position: { x: 400, y: 450 }
