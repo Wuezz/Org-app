@@ -256,4 +256,8 @@ agent_communication:
     - agent: "main"
     - message: "New user request to adjust line-breaking behavior: increase character limit from ~25 to ~30-32 characters to reduce unnecessary wrapping for medium-length names while maintaining smart wrapping for truly long names."
     - agent: "main"
+    - message: "User reported the character limit change didn't work due to fixed 180px width preventing natural text flow."
+    - agent: "main"
+    - message: "Successfully implemented fit-content solution: Updated EntityBox to use w-fit max-w-[240px] min-w-[140px], added width estimation functions to ConnectionLine and OwnershipCanvas for proper centering. Verified medium-length names now stay on single lines with variable box widths, while long names wrap gracefully. Connection lines remain properly centered and all functionality preserved."
+    - agent: "main"
     - message: "Successfully updated character limit to 32 characters across all components (EntityBox.jsx, ConnectionLine.jsx, OwnershipCanvas.jsx). Verified that medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' now remain on single lines while very long names still wrap appropriately. All functionality preserved."
