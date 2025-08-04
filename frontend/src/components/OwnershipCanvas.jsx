@@ -454,26 +454,19 @@ const OwnershipCanvas = () => {
       <div className="flex-1 relative overflow-hidden">
         <div 
           ref={canvasRef}
-          className="w-full h-full relative cursor-move"
+          className={`w-full h-full relative ${isPanning ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{
             transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
             transformOrigin: '0 0'
           }}
-          onMouseMove={(e) => {
-            if (draggedEntity) {
-              const rect = canvasRef.current.getBoundingClientRect();
-              const mousePos = {
-                x: (e.clientX - rect.left - pan.x) / zoom,
-                y: (e.clientY - rect.top - pan.y) / zoom
-              };
-              handleEntityDrag(mousePos);
-            }
-          }}
-          onMouseUp={handleEntityDragEnd}
+          onMouseDown={handleCanvasMouseDown}
+          onMouseMove={handleCanvasMouseMove}
+          onMouseUp={handleCanvasMouseUp}
+          onMouseLeave={handleCanvasMouseUp}
         >
           {/* Grid Background */}
           <div 
-            className="absolute inset-0 opacity-20"
+            className="absolute inset-0 opacity-20 grid-background pointer-events-none"
             style={{
               backgroundImage: `
                 linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
