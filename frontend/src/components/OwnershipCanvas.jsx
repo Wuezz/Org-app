@@ -569,6 +569,44 @@ const OwnershipCanvas = () => {
                 Cancel
               </Button>
             </div>
+            <Button 
+              variant="destructive" 
+              onClick={handleDeleteEntity}
+              className="w-full mt-2"
+            >
+              <Trash2 className="h-4 w-4 mr-2" />
+              Delete Entity
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      {/* Clear All Confirmation Dialog */}
+      <Dialog open={showClearAllDialog} onOpenChange={setShowClearAllDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Clear All Entities</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <p className="text-gray-600">
+              Are you sure you want to clear the current hierarchy? This will delete all entities and connections. This action cannot be undone.
+            </p>
+            <div className="flex space-x-2">
+              <Button 
+                variant="destructive" 
+                onClick={handleClearAll}
+                className="flex-1"
+              >
+                Yes, Clear All
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowClearAllDialog(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
           </div>
         </DialogContent>
       </Dialog>
