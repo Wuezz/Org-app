@@ -8,9 +8,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from '../hooks/use-toast';
 import EntityBox from './EntityBox';
 import ConnectionLine from './ConnectionLine';
-import { Download, Plus, ZoomIn, ZoomOut, RotateCcw, Trash2 } from 'lucide-react';
+import { Download, Plus, ZoomIn, ZoomOut, RotateCcw, Trash2, Grid3X3 } from 'lucide-react';
 import { mockData } from '../utils/mockData';
 import domtoimage from 'dom-to-image';
+import { Switch } from './ui/switch';
 
 const OwnershipCanvas = () => {
   const [entities, setEntities] = useState(mockData.entities);
