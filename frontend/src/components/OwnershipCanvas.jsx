@@ -62,6 +62,10 @@ const OwnershipCanvas = () => {
     }
   }, []);
 
+  const handleZoomIn = () => {
+    setZoom(prev => Math.min(prev * 1.2, 3));
+  };
+
   const handleZoomOut = () => {
     setZoom(prev => Math.max(prev / 1.2, 0.3));
   };
