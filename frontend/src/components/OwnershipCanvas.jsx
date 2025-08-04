@@ -89,7 +89,22 @@ const OwnershipCanvas = () => {
   const handleEntityDrag = useCallback((mousePos) => {
     if (draggedEntity) {
       const SNAP_THRESHOLD = 12; // pixels
-      const ENTITY_WIDTH = 180;
+      
+      // Function to estimate entity box width based on content
+      const estimateEntityWidth = (entity) => {
+        const MIN_WIDTH = 140;
+        const MAX_WIDTH = 240;
+        const CHAR_WIDTH = 7; // Approximate character width
+        const PADDING = 48; // Icon space + padding
+        
+        // Calculate text width based on name length
+        const nameWidth = entity.name.length * CHAR_WIDTH;
+        const idWidth = entity.idNumber ? entity.idNumber.length * 6 : 0;
+        
+        const estimatedWidth = Math.max(nameWidth, idWidth) + PADDING;
+        
+        return Math.min(Math.max(estimatedWidth, MIN_WIDTH), MAX_WIDTH);
+      };
       
       // Function to calculate entity box height based on name length and content
       const calculateEntityHeight = (entity) => {
@@ -131,10 +146,14 @@ const OwnershipCanvas = () => {
           if (yDistance <= SNAP_THRESHOLD) {
             // Align the centers by adjusting the position
             snappedY = entity.position.y + (entityHeight - draggedHeight) / 2;
+            
+            const entityWidth = estimateEntityWidth(entity);
+            const draggedWidth = estimateEntityWidth(draggedEntityData);
+            
             horizontalGuides.push({
               y: entityCenterY,
               x1: Math.min(entity.position.x, newX) - 50,
-              x2: Math.max(entity.position.x + ENTITY_WIDTH, newX + ENTITY_WIDTH) + 50
+              x2: Math.max(entity.position.x + entityWidth, newX + draggedWidth) + 50
             });
             hasSnapped = true;
             break; // Only snap to the closest alignment
@@ -143,15 +162,18 @@ const OwnershipCanvas = () => {
         
         // Check for vertical alignment (same X position)
         for (const entity of otherEntities) {
+          const entityWidth = estimateEntityWidth(entity);
+          const draggedWidth = estimateEntityWidth(draggedEntityData);
           const entityHeight = calculateEntityHeight(entity);
           const draggedHeight = calculateEntityHeight(draggedEntityData);
           
-          const entityCenterX = entity.position.x + ENTITY_WIDTH / 2;
-          const draggedCenterX = newX + ENTITY_WIDTH / 2;
+          const entityCenterX = entity.position.x + entityWidth / 2;
+          const draggedCenterX = newX + draggedWidth / 2;
           const xDistance = Math.abs(draggedCenterX - entityCenterX);
           
           if (xDistance <= SNAP_THRESHOLD) {
-            snappedX = entity.position.x;
+            // Align the centers by adjusting the position
+            snappedX = entity.position.x + (entityWidth - draggedWidth) / 2;
             verticalGuides.push({
               x: entityCenterX,
               y1: Math.min(entity.position.y, newY) - 50,
