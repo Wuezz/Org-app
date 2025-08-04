@@ -178,3 +178,5 @@ agent_communication:
     - message: "Successfully completed the task. Removed the entire <a> tag containing the Made with Emergent badge from the HTML file and restarted frontend service. Verified through screenshot that the button is no longer visible and main app functionality remains intact."
     - agent: "main"
     - message: "New user request to update mock data and app title. Will locate mockData file and OwnershipCanvas component to make the required changes."
+    - agent: "main"
+    - message: "Successfully completed both tasks: 1) Updated mock data in /app/frontend/src/utils/mockData.js with new entity names and IDs, 2) Changed app title in OwnershipCanvas.jsx from 'Ownership Hierarchy Builder' to 'Ownership & Org Chart Tool'. Verified all changes working correctly through screenshot testing."
