@@ -228,3 +228,5 @@ agent_communication:
     - message: "New user request for layout improvements: 1) Fix connection lines to always connect to center of node boxes, 2) Add automatic line breaks for long entity names (>25 chars). Will examine ConnectionLine.jsx and EntityBox.jsx components."
     - agent: "main"
     - message: "Successfully completed layout improvements: 1) Updated ConnectionLine.jsx to dynamically calculate entity heights and connect lines to true center of boxes, 2) Updated EntityBox.jsx with automatic text wrapping for names >25 chars and fixed box width to 180px, 3) Updated OwnershipCanvas.jsx snap logic to account for dynamic heights. All changes tested and working correctly."
+    - agent: "main"
+    - message: "New user request to adjust line-breaking behavior: increase character limit from ~25 to ~30-32 characters to reduce unnecessary wrapping for medium-length names while maintaining smart wrapping for truly long names."
