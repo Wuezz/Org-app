@@ -320,65 +320,88 @@ const OwnershipCanvas = () => {
     });
   };
 
-  const exportToPDF = () => {
-    const pdf = new jsPDF({
-      orientation: 'landscape',
-      unit: 'px',
-      format: [1200, 800]
-    });
+  const exportToPDF = async () => {
+    try {
+      // Hide snap guides during export
+      setSnapGuides({ horizontal: [], vertical: [] });
+      setIsSnapping(false);
+      
+      // Get the canvas element
+      const canvasElement = canvasRef.current;
+      if (!canvasElement) {
+        toast({
+          title: "Error",
+          description: "Canvas not found for export",
+          variant: "destructive"
+        });
+        return;
+      }
 
-    pdf.setFontSize(16);
-    pdf.text('Ownership Hierarchy Diagram', 20, 30);
-    
-    // Add entities as rectangles with text
-    entities.forEach(entity => {
-      const x = entity.position.x / 2;
-      const y = entity.position.y / 2 + 60;
+      // Create a temporary container with white background for export
+      const exportContainer = document.createElement('div');
+      exportContainer.style.position = 'fixed';
+      exportContainer.style.top = '-9999px';
+      exportContainer.style.left = '-9999px';
+      exportContainer.style.width = '1200px';
+      exportContainer.style.height = '800px';
+      exportContainer.style.backgroundColor = '#ffffff';
+      exportContainer.style.padding = '20px';
+      exportContainer.style.fontFamily = canvasElement.style.fontFamily || 'inherit';
       
-      pdf.setDrawColor(0, 0, 0);
-      pdf.setFillColor(248, 250, 252);
-      pdf.rect(x, y, 120, 60, 'FD');
+      // Clone the canvas content
+      const clonedCanvas = canvasElement.cloneNode(true);
+      clonedCanvas.style.transform = `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`;
+      clonedCanvas.style.transformOrigin = '0 0';
+      clonedCanvas.style.width = '100%';
+      clonedCanvas.style.height = '100%';
       
-      pdf.setFontSize(12);
+      exportContainer.appendChild(clonedCanvas);
+      document.body.appendChild(exportContainer);
+
+      // Capture the canvas with html2canvas
+      const canvas = await html2canvas(exportContainer, {
+        backgroundColor: '#ffffff',
+        scale: 2, // Higher resolution
+        useCORS: true,
+        allowTaint: true,
+        width: 1200,
+        height: 800
+      });
+
+      // Remove temporary container
+      document.body.removeChild(exportContainer);
+
+      // Create PDF
+      const pdf = new jsPDF({
+        orientation: 'landscape',
+        unit: 'px',
+        format: [1200, 800]
+      });
+
+      // Add title
+      pdf.setFontSize(16);
       pdf.setTextColor(0, 0, 0);
-      pdf.text(entity.name, x + 10, y + 25);
-      
-      if (entity.idNumber) {
-        pdf.setFontSize(10);
-        pdf.setTextColor(100, 100, 100);
-        pdf.text(`ID: ${entity.idNumber}`, x + 10, y + 40);
-      }
-    });
+      pdf.text('Ownership Hierarchy Diagram', 20, 30);
 
-    // Add connection lines
-    connections.forEach(conn => {
-      const fromEntity = entities.find(e => e.id === conn.from);
-      const toEntity = entities.find(e => e.id === conn.to);
-      
-      if (fromEntity && toEntity) {
-        const fromX = fromEntity.position.x / 2 + 60;
-        const fromY = fromEntity.position.y / 2 + 90;
-        const toX = toEntity.position.x / 2 + 60;
-        const toY = toEntity.position.y / 2 + 60;
-        
-        pdf.setDrawColor(100, 100, 100);
-        pdf.line(fromX, fromY, toX, toY);
-        
-        // Add percentage label
-        const midX = (fromX + toX) / 2;
-        const midY = (fromY + toY) / 2;
-        pdf.setFontSize(10);
-        pdf.setTextColor(0, 0, 0);
-        pdf.text(`${conn.percentage}%`, midX, midY);
-      }
-    });
+      // Add the canvas image
+      const imgData = canvas.toDataURL('image/png');
+      pdf.addImage(imgData, 'PNG', 0, 40, 1200, 760);
 
-    pdf.save('ownership-hierarchy.pdf');
-    
-    toast({
-      title: "Success",
-      description: "PDF exported successfully"
-    });
+      // Save the PDF
+      pdf.save('ownership-hierarchy.pdf');
+      
+      toast({
+        title: "Success",
+        description: "High-quality PDF exported successfully"
+      });
+    } catch (error) {
+      console.error('PDF export error:', error);
+      toast({
+        title: "Error",
+        description: "Failed to export PDF. Please try again.",
+        variant: "destructive"
+      });
+    }
   };
 
   return (
