@@ -526,10 +526,25 @@ const OwnershipCanvas = () => {
               </DialogContent>
             </Dialog>
 
-            <Button onClick={exportToPDF} variant="outline">
-              <Download className="h-4 w-4 mr-2" />
-              Export PDF
-            </Button>
+            <div className="flex items-center space-x-2">
+              <Button 
+                onClick={downloadAsImage} 
+                variant="outline"
+                disabled={isExporting}
+              >
+                <Image className="h-4 w-4 mr-2" />
+                {isExporting ? 'Generating...' : 'Download Image'}
+              </Button>
+
+              <Button 
+                onClick={exportToPDF} 
+                variant="outline"
+                disabled={isExporting}
+              >
+                <FileText className="h-4 w-4 mr-2" />
+                {isExporting ? 'Generating...' : 'Download PDF'}
+              </Button>
+            </div>
 
             <Button 
               onClick={() => setShowClearAllDialog(true)} 
