@@ -363,6 +363,62 @@ const OwnershipCanvas = () => {
         </div>
       </div>
 
+      {/* Edit Entity Dialog */}
+      <Dialog open={showEditEntityDialog} onOpenChange={setShowEditEntityDialog}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Edit Entity</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="space-y-2">
+              <Label htmlFor="edit-entity-name">Entity Name</Label>
+              <Input
+                id="edit-entity-name"
+                value={editEntityData.name}
+                onChange={(e) => setEditEntityData(prev => ({ ...prev, name: e.target.value }))}
+                placeholder="Enter entity name"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-entity-id">ID Number (Optional)</Label>
+              <Input
+                id="edit-entity-id"
+                value={editEntityData.id}
+                onChange={(e) => setEditEntityData(prev => ({ ...prev, id: e.target.value }))}
+                placeholder="Enter ID number"
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-entity-type">Entity Type</Label>
+              <Select 
+                value={editEntityData.type} 
+                onValueChange={(value) => setEditEntityData(prev => ({ ...prev, type: value }))}
+              >
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="company">Company</SelectItem>
+                  <SelectItem value="person">Person</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+            <div className="flex space-x-2">
+              <Button onClick={handleUpdateEntity} className="flex-1">
+                Update Entity
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => setShowEditEntityDialog(false)}
+                className="flex-1"
+              >
+                Cancel
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden">
         <div 
