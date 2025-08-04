@@ -191,16 +191,22 @@ frontend:
         - agent: "main"
         - comment: "Verified text wrapping works correctly. Long entity names are automatically wrapped to multiple lines while maintaining consistent 180px box width. Tested with 'Innovation Chart LLC with Very Long Company Name'."
   - task: "Adjust line-breaking character limit from 25 to 30-32 characters"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/EntityBox.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "User requested to increase character limit for text wrapping from ~25 to ~30-32 characters to reduce unnecessary line breaks for medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Innovation Chart LLC'."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Updated character limit to 32 in EntityBox.jsx, ConnectionLine.jsx, and OwnershipCanvas.jsx. All height calculation functions now use the same CHARACTER_LIMIT constant."
+        - working: true
+        - agent: "main"
+        - comment: "Verified the adjustment works perfectly. Tested with 'Edward Montgomery' (17 chars), 'Tech Holdings AB' (16 chars), and 'Tech Consultancy Group AB' (26 chars) - all remain on single lines. Long names still wrap properly with smart breaking."
 
 metadata:
   created_by: "main_agent"
