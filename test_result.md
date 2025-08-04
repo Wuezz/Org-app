@@ -102,7 +102,7 @@
 # Testing Data - Main Agent and testing sub agent both should log testing data below this section
 #====================================================================================================
 
-user_problem_statement: 1. Mock data updates - Keep John Smith with ID 19750720-4578, rename Tech Holdings LLC to Tech Holdings AB with ID 559245-4937, rename Acme Corporation to Tech Consultancy Group AB with ID 559378-9341, rename Innovation Labs to Innovation Chart LLC with ID C716984. 2. App title - change from "Ownership Hierarchy Builder" to "Ownership & Org Chart Tool"
+user_problem_statement: 1. Mock data updates - Keep John Smith with ID 19750720-4578, rename Tech Holdings LLC to Tech Holdings AB with ID 559245-4937, rename Acme Corporation to Tech Consultancy Group AB with ID 559378-9341, rename Innovation Labs to Innovation Chart LLC with ID C716984. 2. App title - change from "Ownership Hierarchy Builder" to "Ownership & Org Chart Tool" 3. Layout improvements - ensure connection lines connect to center of nodes and add automatic line breaks for long entity names (>25 chars)
 
 frontend:
   - task: "Remove Emergent badge from bottom right corner"
