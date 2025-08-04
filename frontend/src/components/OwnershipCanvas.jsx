@@ -93,6 +93,35 @@ const OwnershipCanvas = () => {
     setDragOffset({ x: 0, y: 0 });
   }, []);
 
+  const handleCanvasMouseDown = useCallback((e) => {
+    // Only start panning if we're not clicking on an entity or connection
+    if (e.target === e.currentTarget || e.target.classList.contains('grid-background')) {
+      setIsPanning(true);
+      setPanStart({ x: e.clientX - pan.x, y: e.clientY - pan.y });
+    }
+  }, [pan]);
+
+  const handleCanvasMouseMove = useCallback((e) => {
+    if (isPanning) {
+      setPan({
+        x: e.clientX - panStart.x,
+        y: e.clientY - panStart.y
+      });
+    } else if (draggedEntity) {
+      const rect = canvasRef.current.getBoundingClientRect();
+      const mousePos = {
+        x: (e.clientX - rect.left - pan.x) / zoom,
+        y: (e.clientY - rect.top - pan.y) / zoom
+      };
+      handleEntityDrag(mousePos);
+    }
+  }, [isPanning, panStart, draggedEntity, pan, zoom, handleEntityDrag]);
+
+  const handleCanvasMouseUp = useCallback(() => {
+    setIsPanning(false);
+    handleEntityDragEnd();
+  }, [handleEntityDragEnd]);
+
   const handleAddEntity = (parentId, type) => {
     setParentEntity(parentId);
     setConnectionType(type);
