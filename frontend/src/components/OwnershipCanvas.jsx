@@ -41,15 +41,11 @@ const OwnershipCanvas = () => {
   const canvasRef = useRef(null);
   const { toast } = useToast();
 
-  // Load data from localStorage on mount
+  // Save data to localStorage whenever entities or connections change
   useEffect(() => {
-    const savedData = localStorage.getItem('ownershipData');
-    if (savedData) {
-      const parsed = JSON.parse(savedData);
-      setEntities(parsed.entities || mockData.entities);
-      setConnections(parsed.connections || mockData.connections);
-    }
-  }, []);
+    const dataToSave = { entities, connections };
+    localStorage.setItem('ownershipData', JSON.stringify(dataToSave));
+  }, [entities, connections]);
 
   // Save snap preference to localStorage
   useEffect(() => {
