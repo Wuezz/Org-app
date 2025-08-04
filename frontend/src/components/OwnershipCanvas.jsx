@@ -76,19 +76,71 @@ const OwnershipCanvas = () => {
 
   const handleEntityDrag = useCallback((mousePos) => {
     if (draggedEntity) {
+      const SNAP_THRESHOLD = 12; // pixels
+      const ENTITY_WIDTH = 180;
+      const ENTITY_HEIGHT = 80;
+      
+      let newX = mousePos.x - dragOffset.x;
+      let newY = mousePos.y - dragOffset.y;
+      
+      // Get all other entities for snapping
+      const otherEntities = entities.filter(e => e.id !== draggedEntity);
+      const horizontalGuides = [];
+      const verticalGuides = [];
+      let snappedX = newX;
+      let snappedY = newY;
+      let hasSnapped = false;
+      
+      // Check for horizontal alignment (same Y position)
+      for (const entity of otherEntities) {
+        const entityCenterY = entity.position.y + ENTITY_HEIGHT / 2;
+        const draggedCenterY = newY + ENTITY_HEIGHT / 2;
+        
+        if (Math.abs(draggedCenterY - entityCenterY) <= SNAP_THRESHOLD) {
+          snappedY = entity.position.y;
+          horizontalGuides.push({
+            y: entityCenterY,
+            x1: Math.min(entity.position.x, newX) - 50,
+            x2: Math.max(entity.position.x + ENTITY_WIDTH, newX + ENTITY_WIDTH) + 50
+          });
+          hasSnapped = true;
+        }
+      }
+      
+      // Check for vertical alignment (same X position)
+      for (const entity of otherEntities) {
+        const entityCenterX = entity.position.x + ENTITY_WIDTH / 2;
+        const draggedCenterX = newX + ENTITY_WIDTH / 2;
+        
+        if (Math.abs(draggedCenterX - entityCenterX) <= SNAP_THRESHOLD) {
+          snappedX = entity.position.x;
+          verticalGuides.push({
+            x: entityCenterX,
+            y1: Math.min(entity.position.y, newY) - 50,
+            y2: Math.max(entity.position.y + ENTITY_HEIGHT, newY + ENTITY_HEIGHT) + 50
+          });
+          hasSnapped = true;
+        }
+      }
+      
+      // Update snap guides
+      setSnapGuides({ horizontal: horizontalGuides, vertical: verticalGuides });
+      setIsSnapping(hasSnapped);
+      
+      // Update entity position
       setEntities(prev => prev.map(entity => 
         entity.id === draggedEntity 
           ? { 
               ...entity, 
               position: { 
-                x: mousePos.x - dragOffset.x, 
-                y: mousePos.y - dragOffset.y 
+                x: snappedX, 
+                y: snappedY 
               } 
             }
           : entity
       ));
     }
-  }, [draggedEntity, dragOffset]);
+  }, [draggedEntity, dragOffset, entities]);
 
   const handleEntityDragEnd = useCallback(() => {
     setDraggedEntity(null);
