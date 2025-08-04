@@ -49,9 +49,11 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
         className={`p-4 cursor-move select-none transition-all duration-200 min-w-[180px] ${
           isDragging 
             ? 'shadow-xl border-blue-300 bg-blue-50' 
-            : 'shadow-md hover:shadow-lg border-gray-200 bg-white'
+            : 'shadow-md hover:shadow-lg border-gray-200 bg-white hover:bg-gray-50'
         }`}
         onMouseDown={handleMouseDown}
+        onDoubleClick={handleDoubleClick}
+        title="Double-click to edit"
       >
         <div className="flex items-center space-x-3">
           <div className="flex-shrink-0">
