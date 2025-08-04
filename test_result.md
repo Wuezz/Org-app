@@ -235,10 +235,8 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Update entity box to use fit-content width with max-width 240px"
-  stuck_tasks:
-    - "Adjust line-breaking character limit from 25 to 30-32 characters"
+  current_focus: []
+  stuck_tasks: []
   test_all: false
   test_priority: "high_first"
 
