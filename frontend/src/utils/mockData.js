@@ -23,7 +23,7 @@ export const mockData = {
     },
     {
       id: '4',
-      name: 'Innovation Chart LLC with Very Long Company Name',
+      name: 'Innovation Chart LLC',
       idNumber: 'C716984',
       type: 'company',
       position: { x: 400, y: 450 }
