@@ -10,11 +10,28 @@ const ConnectionLine = ({ connection, entities, onUpdatePercentage }) => {
 
   if (!fromEntity || !toEntity) return null;
 
-  // Calculate connection points (center of entities)
-  const fromX = fromEntity.position.x + 90; // Half of entity width
-  const fromY = fromEntity.position.y + 40; // Half of entity height
-  const toX = toEntity.position.x + 90;
-  const toY = toEntity.position.y + 40;
+  // Function to calculate entity box height based on name length and content
+  const calculateEntityHeight = (entity) => {
+    const baseHeight = 68; // Base height for single line content (padding + icon + text + id)
+    const nameLineHeight = 16; // Height per line of text
+    
+    // Calculate how many lines the name will take
+    const nameLines = entity.name.length <= 25 ? 1 : Math.ceil(entity.name.length / 25);
+    const additionalHeight = (nameLines - 1) * nameLineHeight;
+    
+    return baseHeight + additionalHeight;
+  };
+
+  // Calculate connection points (center of entities with dynamic dimensions)
+  const ENTITY_WIDTH = 180; // Fixed width as defined in EntityBox
+  
+  const fromHeight = calculateEntityHeight(fromEntity);
+  const toHeight = calculateEntityHeight(toEntity);
+  
+  const fromX = fromEntity.position.x + ENTITY_WIDTH / 2; // Center X
+  const fromY = fromEntity.position.y + fromHeight / 2; // Center Y
+  const toX = toEntity.position.x + ENTITY_WIDTH / 2; // Center X
+  const toY = toEntity.position.y + toHeight / 2; // Center Y
 
   // Calculate midpoint for label
   const midX = (fromX + toX) / 2;
