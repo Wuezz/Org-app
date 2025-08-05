@@ -740,20 +740,6 @@ const OwnershipCanvas = () => {
           onMouseUp={handleCanvasMouseUp}
           onMouseLeave={handleCanvasMouseUp}
         >
-          {/* Grid Background */}
-          <div 
-            className={`absolute inset-0 grid-background pointer-events-none transition-opacity duration-300 ${
-              snapToAlignment ? 'opacity-30' : 'opacity-10'
-            }`}
-            style={{
-              backgroundImage: `
-                linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
-              `,
-              backgroundSize: '120px 120px' // Match GRID_SIZE
-            }}
-          />
-
           {/* Snap Guidelines */}
           {isSnapping && (
             <div className="absolute inset-0 pointer-events-none z-20">
