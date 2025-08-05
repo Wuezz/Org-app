@@ -227,6 +227,28 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified the solution works perfectly. Entity boxes now have variable widths (e.g., 216px vs 240px) based on content. Medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' stay on single lines. Long names wrap gracefully. Connection lines remain properly centered."
+  - task: "Implement grid-based snapping system"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested grid-based snapping with fixed rows/columns, support for V-shaped layouts (snapping between columns), configurable grid spacing, and maintaining visual guidelines."
+  - task: "Fix drag behavior glitch"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User reported occasional bug where dragged box lags behind cursor or appears offset to the left. Need to ensure smooth dragging with correct mouse anchoring."
 
 metadata:
   created_by: "main_agent"
