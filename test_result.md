@@ -360,4 +360,8 @@ agent_communication:
     - agent: "main"
     - message: "Successfully replaced CSS background grid with dynamic canvas-based grid solution: 1) Added dedicated grid canvas element positioned behind content, 2) Implemented renderGrid function that dynamically draws 120px grid lines, 3) Added viewport optimization to only render visible grid lines, 4) Synchronized grid transforms with main canvas zoom/pan, 5) Added automatic re-rendering on state changes and window resize. Grid now properly follows all transforms, aligns perfectly with snapping system, and maintains export compatibility."
     - agent: "main"
+    - message: "User requested integration of PDF export feature from another fork that was missing from current implementation."
+    - agent: "main"
+    - message: "Successfully integrated PDF export feature from other fork: 1) Added jsPDF dependency, 2) Implemented downloadAsPDF function using dom-to-image + jsPDF approach for landscape A4 format, 3) Added Download PDF button alongside existing Download Image button, 4) Reused existing captureCanvasAsImage function for consistency. Both PNG and PDF export now working perfectly with all implemented features including grid-based snapping system and dynamic canvas grid."
+    - agent: "main"
     - message: "Successfully updated character limit to 32 characters across all components (EntityBox.jsx, ConnectionLine.jsx, OwnershipCanvas.jsx). Verified that medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' now remain on single lines while very long names still wrap appropriately. All functionality preserved."
