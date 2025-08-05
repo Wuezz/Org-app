@@ -63,6 +63,81 @@ const OwnershipCanvas = () => {
     }
   }, []);
 
+  // Grid rendering function
+  const renderGrid = useCallback(() => {
+    if (!gridCanvasRef.current || !canvasRef.current || !snapToAlignment) {
+      return;
+    }
+
+    const gridCanvas = gridCanvasRef.current;
+    const ctx = gridCanvas.getContext('2d');
+    const canvasRect = canvasRef.current.getBoundingClientRect();
+
+    // Set canvas size to match the viewport
+    gridCanvas.width = canvasRect.width;
+    gridCanvas.height = canvasRect.height;
+
+    // Clear the canvas
+    ctx.clearRect(0, 0, gridCanvas.width, gridCanvas.height);
+
+    const GRID_SIZE = 120;
+    
+    // Calculate the visible area in canvas coordinates (accounting for zoom and pan)
+    const viewportLeft = (-pan.x) / zoom;
+    const viewportTop = (-pan.y) / zoom;
+    const viewportRight = (canvasRect.width - pan.x) / zoom;
+    const viewportBottom = (canvasRect.height - pan.y) / zoom;
+
+    // Calculate grid line positions
+    const startX = Math.floor(viewportLeft / GRID_SIZE) * GRID_SIZE;
+    const endX = Math.ceil(viewportRight / GRID_SIZE) * GRID_SIZE;
+    const startY = Math.floor(viewportTop / GRID_SIZE) * GRID_SIZE;
+    const endY = Math.ceil(viewportBottom / GRID_SIZE) * GRID_SIZE;
+
+    // Set grid line style
+    ctx.strokeStyle = 'rgba(0, 0, 0, 0.1)';
+    ctx.lineWidth = 1;
+    ctx.setLineDash([]);
+
+    // Apply the same transform as the main canvas
+    ctx.save();
+    ctx.scale(zoom, zoom);
+    ctx.translate(pan.x / zoom, pan.y / zoom);
+
+    // Draw vertical lines
+    for (let x = startX; x <= endX; x += GRID_SIZE) {
+      ctx.beginPath();
+      ctx.moveTo(x, startY - GRID_SIZE);
+      ctx.lineTo(x, endY + GRID_SIZE);
+      ctx.stroke();
+    }
+
+    // Draw horizontal lines
+    for (let y = startY; y <= endY; y += GRID_SIZE) {
+      ctx.beginPath();
+      ctx.moveTo(startX - GRID_SIZE, y);
+      ctx.lineTo(endX + GRID_SIZE, y);
+      ctx.stroke();
+    }
+
+    ctx.restore();
+  }, [zoom, pan, snapToAlignment]);
+
+  // Re-render grid when zoom, pan, or snap state changes
+  useEffect(() => {
+    renderGrid();
+  }, [renderGrid]);
+
+  // Re-render grid when window resizes
+  useEffect(() => {
+    const handleResize = () => {
+      setTimeout(renderGrid, 100); // Small delay to ensure layout has updated
+    };
+    
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, [renderGrid]);
+
   const handleZoomIn = () => {
     setZoom(prev => Math.min(prev * 1.2, 3));
   };
