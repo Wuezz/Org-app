@@ -281,6 +281,23 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified dynamic canvas grid works perfectly. Grid appears/disappears with snap toggle, scales properly with zoom (larger spacing when zoomed in), follows pan transforms, aligns perfectly with entity positions, and doesn't interfere with interactions. Export compatibility confirmed."
+  - task: "Integrate PDF export feature from another fork"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested integration of PDF export feature from another fork using dom-to-image + jsPDF approach to replace broken svg2pdf.js implementation."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Successfully integrated PDF export: 1) Added jsPDF dependency to package.json, 2) Added jsPDF import and downloadAsPDF function using dom-to-image + jsPDF, 3) Added Download PDF button to UI alongside existing Download Image button, 4) Configured landscape A4 format with proper filename and toast notifications."
+        - working: true
+        - agent: "main"
+        - comment: "Verified PDF export integration successful. Both Download Image and Download PDF buttons are present and functional in the UI. PDF export reuses existing captureCanvasAsImage function for consistency and reliability. Feature is ready for production use."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
