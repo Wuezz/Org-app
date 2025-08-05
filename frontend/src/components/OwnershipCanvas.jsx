@@ -40,6 +40,9 @@ const OwnershipCanvas = () => {
   const [editingEntity, setEditingEntity] = useState(null);
   const [editEntityData, setEditEntityData] = useState({ name: '', id: '', type: 'company' });
   const [showClearAllDialog, setShowClearAllDialog] = useState(false);
+  const [showFeedbackDialog, setShowFeedbackDialog] = useState(false);
+  const [feedbackMessage, setFeedbackMessage] = useState('');
+  const [feedbackSubmitted, setFeedbackSubmitted] = useState(false);
   
   const canvasRef = useRef(null);
   const gridCanvasRef = useRef(null);
