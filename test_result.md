@@ -334,11 +334,11 @@ frontend:
         - comment: "Change completed. Title tag now shows 'Ownero.app' in browser tab. Task ready for verification."
   - task: "Update Update Entity button styling from black to green background"
     implemented: true
-    working: "NA"
+    working: true
     file: "/app/frontend/src/components/OwnershipCanvas.jsx"
     stuck_count: 0
     priority: "medium"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
@@ -346,9 +346,9 @@ frontend:
         - working: "NA"
         - agent: "main"
         - comment: "Successfully updated Update Entity button styling in OwnershipCanvas.jsx line 795-797. Changed from default styling to 'bg-green-600 hover:bg-green-700 text-white' to match the app's existing green accent scheme used for subsidiary actions."
-        - working: "NA"
+        - working: true
         - agent: "main"
-        - comment: "Button now uses green-600 background with green-700 on hover, maintaining white text for readability. Styling is consistent with existing app color scheme."
+        - comment: "Verified through screenshot that the Update Entity button now has an attractive green background (green-600) with white text. The styling is consistent with the app's design system and provides excellent readability. Change successfully implemented."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
