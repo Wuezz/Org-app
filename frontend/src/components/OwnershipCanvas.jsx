@@ -39,6 +39,7 @@ const OwnershipCanvas = () => {
   const [showClearAllDialog, setShowClearAllDialog] = useState(false);
   
   const canvasRef = useRef(null);
+  const gridCanvasRef = useRef(null);
   const { toast } = useToast();
 
   // Save data to localStorage whenever entities or connections change
