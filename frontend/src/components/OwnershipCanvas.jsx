@@ -463,6 +463,52 @@ const OwnershipCanvas = () => {
     });
   };
 
+  const handleFeedbackSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!feedbackMessage.trim()) {
+      toast({
+        title: "Error",
+        description: "Please enter a feedback message",
+        variant: "destructive"
+      });
+      return;
+    }
+
+    try {
+      const formData = new FormData();
+      formData.append('message', feedbackMessage);
+      formData.append('_subject', 'Feedback from Ownero.app');
+      
+      const response = await fetch('https://formsubmit.co/edward@tuvekarr.com', {
+        method: 'POST',
+        body: formData
+      });
+
+      if (response.ok) {
+        setFeedbackSubmitted(true);
+        toast({
+          title: "Success",
+          description: "Feedback sent successfully!"
+        });
+      } else {
+        throw new Error('Failed to send feedback');
+      }
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to send feedback. Please try again.",
+        variant: "destructive"
+      });
+    }
+  };
+
+  const handleFeedbackDialogClose = () => {
+    setShowFeedbackDialog(false);
+    setFeedbackMessage('');
+    setFeedbackSubmitted(false);
+  };
+
   const createEntity = () => {
     if (!newEntity.name.trim()) {
       toast({
