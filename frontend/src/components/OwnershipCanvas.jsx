@@ -75,17 +75,25 @@ const OwnershipCanvas = () => {
     setPan({ x: 0, y: 0 });
   };
 
-  const handleEntityDragStart = useCallback((entityId, mousePos) => {
+  const handleEntityDragStart = useCallback((entityId, clientPos) => {
     const entity = entities.find(e => e.id === entityId);
-    if (entity) {
+    if (entity && canvasRef.current) {
       setDraggedEntity(entityId);
+      
+      // Convert client coordinates to canvas coordinates
+      const rect = canvasRef.current.getBoundingClientRect();
+      const canvasPos = {
+        x: (clientPos.x - rect.left - pan.x) / zoom,
+        y: (clientPos.y - rect.top - pan.y) / zoom
+      };
+      
       // Calculate the offset from the entity's top-left corner to the mouse position
       setDragOffset({
-        x: mousePos.x - entity.position.x,
-        y: mousePos.y - entity.position.y
+        x: canvasPos.x - entity.position.x,
+        y: canvasPos.y - entity.position.y
       });
     }
-  }, [entities]);
+  }, [entities, pan, zoom]);
 
   const handleEntityDrag = useCallback((mousePos) => {
     if (draggedEntity) {
