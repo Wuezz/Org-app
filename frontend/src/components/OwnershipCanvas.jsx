@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect, useCallback } from 'react';
+import { Link } from 'react-router-dom';
 import { Button } from './ui/button';
 import { Card } from './ui/card';
 import { Input } from './ui/input';
@@ -8,7 +9,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useToast } from '../hooks/use-toast';
 import EntityBox from './EntityBox';
 import ConnectionLine from './ConnectionLine';
-import { Download, Plus, ZoomIn, ZoomOut, RotateCcw, Trash2, Grid3X3 } from 'lucide-react';
+import { Download, Plus, ZoomIn, ZoomOut, RotateCcw, Trash2, Grid3X3, HelpCircle } from 'lucide-react';
 import { mockData } from '../utils/mockData';
 import domtoimage from 'dom-to-image';
 import jsPDF from 'jspdf';
