@@ -11,6 +11,7 @@ import ConnectionLine from './ConnectionLine';
 import { Download, Plus, ZoomIn, ZoomOut, RotateCcw, Trash2, Grid3X3 } from 'lucide-react';
 import { mockData } from '../utils/mockData';
 import domtoimage from 'dom-to-image';
+import jsPDF from 'jspdf';
 import { Switch } from './ui/switch';
 
 const OwnershipCanvas = () => {
