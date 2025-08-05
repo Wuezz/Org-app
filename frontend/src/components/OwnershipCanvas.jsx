@@ -904,6 +904,61 @@ const OwnershipCanvas = () => {
         </DialogContent>
       </Dialog>
 
+      {/* Feedback Dialog */}
+      <Dialog open={showFeedbackDialog} onOpenChange={handleFeedbackDialogClose}>
+        <DialogContent className="sm:max-w-md">
+          <DialogHeader>
+            <DialogTitle>Send Feedback</DialogTitle>
+          </DialogHeader>
+          {!feedbackSubmitted ? (
+            <form onSubmit={handleFeedbackSubmit} className="space-y-4">
+              <div className="space-y-2">
+                <Label htmlFor="feedback-message">Your Message</Label>
+                <Textarea
+                  id="feedback-message"
+                  placeholder="Share your thoughts, suggestions, or report any issues..."
+                  value={feedbackMessage}
+                  onChange={(e) => setFeedbackMessage(e.target.value)}
+                  rows={5}
+                  className="resize-none"
+                />
+              </div>
+              <div className="flex space-x-2">
+                <Button 
+                  type="submit" 
+                  className="flex-1 bg-blue-600 hover:bg-blue-700"
+                >
+                  Send Feedback
+                </Button>
+                <Button 
+                  type="button"
+                  variant="outline" 
+                  onClick={handleFeedbackDialogClose}
+                  className="flex-1"
+                >
+                  Cancel
+                </Button>
+              </div>
+            </form>
+          ) : (
+            <div className="text-center py-6">
+              <div className="mb-3 text-green-600">
+                <MessageSquare className="h-12 w-12 mx-auto" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-900 mb-2">
+                Thanks for your feedback!
+              </h3>
+              <p className="text-gray-600 mb-4">
+                We appreciate your input and will review your message soon.
+              </p>
+              <Button onClick={handleFeedbackDialogClose} className="bg-blue-600 hover:bg-blue-700">
+                Close
+              </Button>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
+
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden">
         {/* Grid Canvas */}
