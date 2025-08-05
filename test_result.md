@@ -261,6 +261,20 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified infinite grid works perfectly. Grid appears/disappears with snap toggle, scales properly with zoom, moves naturally with pan, doesn't interfere with interactions, and will be captured in exports as part of DOM background."
+  - task: "Replace CSS grid with dynamic canvas-based grid"
+    implemented: false
+    working: false
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: false
+        - agent: "user"
+        - comment: "User reported CSS background grid doesn't follow pan/zoom transforms, causing misalignment with actual canvas content. Grid appears only in original area and detaches from content."
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested replacement of CSS grid with dedicated canvas element that dynamically renders 120px grid lines and updates based on zoom/pan transforms for proper alignment."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
