@@ -6,15 +6,13 @@ import { Factory, User, ArrowUp, ArrowDown } from 'lucide-react';
 const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, isDragging }) => {
   const handleMouseDown = (e) => {
     e.preventDefault();
-    // Pass the absolute mouse position in canvas coordinates
-    const canvasRect = e.currentTarget.closest('.relative.overflow-hidden')?.getBoundingClientRect();
-    if (canvasRect) {
-      const mousePos = {
-        x: e.clientX - canvasRect.left,
-        y: e.clientY - canvasRect.top
-      };
-      onDragStart(entity.id, mousePos);
-    }
+    // Calculate mouse position in canvas coordinates (accounting for zoom/pan will be done in the parent)
+    const rect = e.currentTarget.getBoundingClientRect();
+    const mousePos = {
+      x: e.clientX,
+      y: e.clientY
+    };
+    onDragStart(entity.id, mousePos);
   };
 
   const handleDoubleClick = (e) => {
