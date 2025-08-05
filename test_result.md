@@ -294,4 +294,8 @@ agent_communication:
     - agent: "main"
     - message: "Successfully implemented fit-content solution: Updated EntityBox to use w-fit max-w-[240px] min-w-[140px], added width estimation functions to ConnectionLine and OwnershipCanvas for proper centering. Verified medium-length names now stay on single lines with variable box widths, while long names wrap gracefully. Connection lines remain properly centered and all functionality preserved."
     - agent: "main"
+    - message: "New user request for advanced snap-to-alignment improvements: 1) Implement grid-based snapping with fixed rows/columns (120px spacing), 2) Support V-shaped layouts by allowing snapping between grid columns, 3) Fix drag behavior glitch where boxes lag behind cursor."
+    - agent: "main"  
+    - message: "Successfully implemented comprehensive grid-based snapping system: 1) Added 120px grid with visual background that becomes more visible when snap is enabled, 2) Implemented grid-point snapping for clean row/column alignment, 3) Added V-shape support allowing entities to snap to center between two entities at same Y level, 4) Fixed drag behavior by correcting mouse position calculations and coordinate transformations. All features tested and working perfectly."
+    - agent: "main"
     - message: "Successfully updated character limit to 32 characters across all components (EntityBox.jsx, ConnectionLine.jsx, OwnershipCanvas.jsx). Verified that medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' now remain on single lines while very long names still wrap appropriately. All functionality preserved."
