@@ -79,6 +79,7 @@ const OwnershipCanvas = () => {
     const entity = entities.find(e => e.id === entityId);
     if (entity) {
       setDraggedEntity(entityId);
+      // Calculate the offset from the entity's top-left corner to the mouse position
       setDragOffset({
         x: mousePos.x - entity.position.x,
         y: mousePos.y - entity.position.y
