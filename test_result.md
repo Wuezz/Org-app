@@ -381,4 +381,8 @@ agent_communication:
     - agent: "main"
     - message: "Successfully integrated PDF export feature from other fork: 1) Added jsPDF dependency, 2) Implemented downloadAsPDF function using dom-to-image + jsPDF approach for landscape A4 format, 3) Added Download PDF button alongside existing Download Image button, 4) Reused existing captureCanvasAsImage function for consistency. Both PNG and PDF export now working perfectly with all implemented features including grid-based snapping system and dynamic canvas grid."
     - agent: "main"
+    - message: "User requested new FAQ page at /faq route with navigation bar link containing 10 placeholder Q&As for easy GitHub editing."
+    - agent: "main"
+    - message: "Successfully implemented FAQ page with complete navigation: 1) Created clean, minimal FAQ.jsx component with 10 placeholder questions using Tailwind typography, 2) Added /faq route to React Router setup, 3) Added FAQ navigation link with help icon to main page header, 4) Implemented back navigation for seamless user experience, 5) Used simple static content structure for easy GitHub editing. All navigation and content display working perfectly."
+    - agent: "main"
     - message: "Successfully updated character limit to 32 characters across all components (EntityBox.jsx, ConnectionLine.jsx, OwnershipCanvas.jsx). Verified that medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' now remain on single lines while very long names still wrap appropriately. All functionality preserved."
