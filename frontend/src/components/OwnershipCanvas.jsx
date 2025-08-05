@@ -801,12 +801,21 @@ const OwnershipCanvas = () => {
 
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden">
+        {/* Grid Canvas */}
+        <canvas
+          id="grid-canvas"
+          ref={gridCanvasRef}
+          className="absolute top-0 left-0 pointer-events-none z-0"
+          style={{
+            width: '100%',
+            height: '100%'
+          }}
+        />
+        
         <div 
           id="ownership-canvas"
           ref={canvasRef}
-          className={`w-full h-full relative ${isPanning ? 'cursor-grabbing' : 'cursor-grab'} ${
-            snapToAlignment ? 'snap-active' : ''
-          }`}
+          className={`w-full h-full relative ${isPanning ? 'cursor-grabbing' : 'cursor-grab'}`}
           style={{
             transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
             transformOrigin: '0 0'
