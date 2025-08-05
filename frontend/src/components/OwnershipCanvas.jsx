@@ -671,6 +671,15 @@ const OwnershipCanvas = () => {
               <HelpCircle className="h-4 w-4 mr-1" />
               FAQ
             </Link>
+            <Button
+              variant="ghost"
+              size="sm"
+              onClick={() => setShowFeedbackDialog(true)}
+              className="flex items-center text-gray-600 hover:text-gray-900 transition-colors"
+            >
+              <MessageSquare className="h-4 w-4 mr-1" />
+              Feedback
+            </Button>
           </div>
           <div className="flex items-center space-x-4">
             <div className="flex items-center space-x-2">
