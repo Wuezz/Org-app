@@ -580,6 +580,32 @@ const OwnershipCanvas = () => {
     }
   };
 
+  const downloadAsPDF = async () => {
+    try {
+      const dataUrl = await captureCanvasAsImage();
+      
+      // Create PDF document in landscape mode
+      const pdf = new jsPDF('landscape', 'mm', 'a4');
+      
+      // A4 landscape dimensions (297mm x 210mm)
+      const pdfWidth = 297;
+      const pdfHeight = 210;
+      
+      // Add the image to PDF, scaled to fit the page
+      pdf.addImage(dataUrl, 'PNG', 0, 0, pdfWidth, pdfHeight);
+      
+      // Save the PDF
+      pdf.save('ownership-chart.pdf');
+      
+      toast({
+        title: "Success",
+        description: "PDF downloaded successfully"
+      });
+    } catch (error) {
+      // Error already handled in captureCanvasAsImage
+    }
+  };
+
   return (
     <div className="h-screen bg-gray-50 flex flex-col">
       {/* Header */}
