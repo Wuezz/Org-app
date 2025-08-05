@@ -228,27 +228,39 @@ frontend:
         - agent: "main"
         - comment: "Verified the solution works perfectly. Entity boxes now have variable widths (e.g., 216px vs 240px) based on content. Medium-length names like 'Edward Montgomery', 'Tech Holdings AB', and 'Tech Consultancy Group AB' stay on single lines. Long names wrap gracefully. Connection lines remain properly centered."
   - task: "Implement grid-based snapping system"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/OwnershipCanvas.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "User requested grid-based snapping with fixed rows/columns, support for V-shaped layouts (snapping between columns), configurable grid spacing, and maintaining visual guidelines."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Implemented comprehensive grid-based snapping system with 120px grid spacing, V-shape support for entities at same Y level, enhanced visual grid background, and improved snap guides."
+        - working: true
+        - agent: "main"
+        - comment: "Verified grid-based snapping works perfectly. Grid is visible with 120px spacing, entities snap to grid points, V-shaped layouts work correctly with center positioning between entities at same level, and visual guidelines function properly."
   - task: "Fix drag behavior glitch"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/components/OwnershipCanvas.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "User reported occasional bug where dragged box lags behind cursor or appears offset to the left. Need to ensure smooth dragging with correct mouse anchoring."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Fixed drag behavior by correcting mouse position calculation in EntityBox and updating drag start handler to properly convert client coordinates to canvas coordinates accounting for zoom/pan."
+        - working: true
+        - agent: "main"
+        - comment: "Verified drag behavior is now smooth and responsive. Entities stick properly to cursor during drag operations without lag or offset issues."
 
 metadata:
   created_by: "main_agent"
