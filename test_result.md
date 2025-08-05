@@ -299,16 +299,22 @@ frontend:
         - agent: "main"
         - comment: "Verified PDF export integration successful. Both Download Image and Download PDF buttons are present and functional in the UI. PDF export reuses existing captureCanvasAsImage function for consistency and reliability. Feature is ready for production use."
   - task: "Add FAQ page with navigation"
-    implemented: false
-    working: "NA"
+    implemented: true
+    working: true
     file: "/app/frontend/src/pages/FAQ.jsx"
     stuck_count: 0
     priority: "high"
-    needs_retesting: true
+    needs_retesting: false
     status_history:
         - working: "NA"
         - agent: "main"
         - comment: "User requested new FAQ page at /faq route with navigation bar link, containing 10 placeholder Q&As in clean, minimal styling for easy GitHub editing."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Successfully implemented FAQ page: 1) Created /src/pages/FAQ.jsx with 10 placeholder Q&As, 2) Added /faq route to App.js, 3) Added FAQ navigation link to OwnershipCanvas header with help icon, 4) Implemented clean typography and back navigation."
+        - working: true
+        - agent: "main"
+        - comment: "Verified FAQ page works perfectly. Navigation from main page to FAQ works, all 10 FAQ questions display correctly with clean styling, back navigation returns to main page, and content is easily editable for GitHub maintenance."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
