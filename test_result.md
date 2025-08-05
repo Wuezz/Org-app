@@ -340,8 +340,7 @@ metadata:
   run_ui: false
 
 test_plan:
-  current_focus:
-    - "Add FAQ page with navigation"
+  current_focus: []
   stuck_tasks: []
   test_all: false
   test_priority: "high_first"
