@@ -89,7 +89,9 @@ const OwnershipCanvas = () => {
 
   const handleEntityDrag = useCallback((mousePos) => {
     if (draggedEntity) {
-      const SNAP_THRESHOLD = 12; // pixels
+      // Grid configuration
+      const GRID_SIZE = 120; // Grid spacing in pixels
+      const SNAP_THRESHOLD = 20; // Increased threshold for grid snapping
       
       // Function to estimate entity box width based on content
       const estimateEntityWidth = (entity) => {
@@ -109,7 +111,7 @@ const OwnershipCanvas = () => {
       
       // Function to calculate entity box height based on name length and content
       const calculateEntityHeight = (entity) => {
-        const baseHeight = 68; // Base height for single line content (padding + icon + text + id)
+        const baseHeight = 68; // Base height for single line content
         const nameLineHeight = 16; // Height per line of text
         const CHARACTER_LIMIT = 32; // Updated to match EntityBox
         
@@ -120,7 +122,7 @@ const OwnershipCanvas = () => {
         return baseHeight + additionalHeight;
       };
       
-      // Default to following mouse position exactly
+      // Calculate the desired position based on mouse
       let newX = mousePos.x - dragOffset.x;
       let newY = mousePos.y - dragOffset.y;
       
@@ -130,59 +132,97 @@ const OwnershipCanvas = () => {
       let snappedY = newY;
       let hasSnapped = false;
       
-      // Only apply snapping if enabled and within threshold
+      // Grid-based snapping when snap-to-alignment is enabled
       if (snapToAlignment) {
-        const otherEntities = entities.filter(e => e.id !== draggedEntity);
         const draggedEntityData = entities.find(e => e.id === draggedEntity);
+        const draggedWidth = estimateEntityWidth(draggedEntityData);
+        const draggedHeight = calculateEntityHeight(draggedEntityData);
         
-        // Check for horizontal alignment (same Y position)
-        for (const entity of otherEntities) {
-          const entityHeight = calculateEntityHeight(entity);
-          const draggedHeight = calculateEntityHeight(draggedEntityData);
-          
-          const entityCenterY = entity.position.y + entityHeight / 2;
-          const draggedCenterY = newY + draggedHeight / 2;
-          const yDistance = Math.abs(draggedCenterY - entityCenterY);
-          
-          if (yDistance <= SNAP_THRESHOLD) {
-            // Align the centers by adjusting the position
-            snappedY = entity.position.y + (entityHeight - draggedHeight) / 2;
-            
-            const entityWidth = estimateEntityWidth(entity);
-            const draggedWidth = estimateEntityWidth(draggedEntityData);
-            
-            horizontalGuides.push({
-              y: entityCenterY,
-              x1: Math.min(entity.position.x, newX) - 50,
-              x2: Math.max(entity.position.x + entityWidth, newX + draggedWidth) + 50
-            });
-            hasSnapped = true;
-            break; // Only snap to the closest alignment
-          }
+        // Find the center point of the dragged entity
+        const draggedCenterX = newX + draggedWidth / 2;
+        const draggedCenterY = newY + draggedHeight / 2;
+        
+        // Calculate nearest grid points
+        const nearestGridX = Math.round(draggedCenterX / GRID_SIZE) * GRID_SIZE;
+        const nearestGridY = Math.round(draggedCenterY / GRID_SIZE) * GRID_SIZE;
+        
+        // Calculate distance to nearest grid point
+        const distanceToGridX = Math.abs(draggedCenterX - nearestGridX);
+        const distanceToGridY = Math.abs(draggedCenterY - nearestGridY);
+        
+        // Snap to grid if within threshold
+        if (distanceToGridX <= SNAP_THRESHOLD) {
+          snappedX = nearestGridX - draggedWidth / 2;
+          verticalGuides.push({
+            x: nearestGridX,
+            y1: nearestGridY - 200,
+            y2: nearestGridY + 200
+          });
+          hasSnapped = true;
         }
         
-        // Check for vertical alignment (same X position)
-        for (const entity of otherEntities) {
-          const entityWidth = estimateEntityWidth(entity);
-          const draggedWidth = estimateEntityWidth(draggedEntityData);
-          const entityHeight = calculateEntityHeight(entity);
-          const draggedHeight = calculateEntityHeight(draggedEntityData);
-          
-          const entityCenterX = entity.position.x + entityWidth / 2;
-          const draggedCenterX = newX + draggedWidth / 2;
-          const xDistance = Math.abs(draggedCenterX - entityCenterX);
-          
-          if (xDistance <= SNAP_THRESHOLD) {
-            // Align the centers by adjusting the position
-            snappedX = entity.position.x + (entityWidth - draggedWidth) / 2;
-            verticalGuides.push({
-              x: entityCenterX,
-              y1: Math.min(entity.position.y, newY) - 50,
-              y2: Math.max(entity.position.y + entityHeight, newY + draggedHeight) + 50
-            });
-            hasSnapped = true;
-            break; // Only snap to the closest alignment
+        if (distanceToGridY <= SNAP_THRESHOLD) {
+          snappedY = nearestGridY - draggedHeight / 2;
+          horizontalGuides.push({
+            y: nearestGridY,
+            x1: nearestGridX - 200,
+            x2: nearestGridX + 200
+          });
+          hasSnapped = true;
+        }
+        
+        // Additional snapping: Between existing entities for V-shapes
+        const otherEntities = entities.filter(e => e.id !== draggedEntity);
+        
+        // Look for pairs of entities at the same Y level to create V-shape opportunities
+        for (let i = 0; i < otherEntities.length; i++) {
+          for (let j = i + 1; j < otherEntities.length; j++) {
+            const entity1 = otherEntities[i];
+            const entity2 = otherEntities[j];
+            
+            const entity1Width = estimateEntityWidth(entity1);
+            const entity2Width = estimateEntityWidth(entity2);
+            const entity1Height = calculateEntityHeight(entity1);
+            const entity2Height = calculateEntityHeight(entity2);
+            
+            const entity1CenterX = entity1.position.x + entity1Width / 2;
+            const entity1CenterY = entity1.position.y + entity1Height / 2;
+            const entity2CenterX = entity2.position.x + entity2Width / 2;
+            const entity2CenterY = entity2.position.y + entity2Height / 2;
+            
+            // Check if entities are roughly at the same Y level (within grid spacing)
+            if (Math.abs(entity1CenterY - entity2CenterY) <= GRID_SIZE / 2) {
+              // Calculate midpoint between the two entities
+              const midpointX = (entity1CenterX + entity2CenterX) / 2;
+              const avgY = (entity1CenterY + entity2CenterY) / 2;
+              
+              // Check if dragged entity center is near this midpoint
+              const distanceToMidX = Math.abs(draggedCenterX - midpointX);
+              const distanceToMidY = Math.abs(draggedCenterY - (avgY + GRID_SIZE)); // Below the pair
+              
+              if (distanceToMidX <= SNAP_THRESHOLD && distanceToMidY <= SNAP_THRESHOLD) {
+                snappedX = midpointX - draggedWidth / 2;
+                snappedY = avgY + GRID_SIZE - draggedHeight / 2;
+                
+                // Add visual guides for V-shape
+                verticalGuides.push({
+                  x: midpointX,
+                  y1: avgY - 50,
+                  y2: avgY + GRID_SIZE + 50
+                });
+                
+                horizontalGuides.push({
+                  y: avgY + GRID_SIZE,
+                  x1: Math.min(entity1CenterX, entity2CenterX) - 50,
+                  x2: Math.max(entity1CenterX, entity2CenterX) + 50
+                });
+                
+                hasSnapped = true;
+                break;
+              }
+            }
           }
+          if (hasSnapped) break;
         }
       }
       
