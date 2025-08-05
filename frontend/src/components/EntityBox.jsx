@@ -6,12 +6,15 @@ import { Factory, User, ArrowUp, ArrowDown } from 'lucide-react';
 const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, isDragging }) => {
   const handleMouseDown = (e) => {
     e.preventDefault();
-    const rect = e.currentTarget.getBoundingClientRect();
-    const mousePos = {
-      x: e.clientX - rect.left,
-      y: e.clientY - rect.top
-    };
-    onDragStart(entity.id, { x: entity.position.x + mousePos.x, y: entity.position.y + mousePos.y });
+    // Pass the absolute mouse position in canvas coordinates
+    const canvasRect = e.currentTarget.closest('.relative.overflow-hidden')?.getBoundingClientRect();
+    if (canvasRect) {
+      const mousePos = {
+        x: e.clientX - canvasRect.left,
+        y: e.clientY - canvasRect.top
+      };
+      onDragStart(entity.id, mousePos);
+    }
   };
 
   const handleDoubleClick = (e) => {
