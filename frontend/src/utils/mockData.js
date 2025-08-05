@@ -5,28 +5,28 @@ export const mockData = {
       name: 'Tech Consultancy Group AB',
       idNumber: '559378-9341',
       type: 'company',
-      position: { x: 400, y: 240 }
+      position: { x: 400, y: 300 }
     },
     {
       id: '2',
       name: 'John Smith',
       idNumber: '19750720-4578',
       type: 'person',
-      position: { x: 280, y: 120 }
+      position: { x: 200, y: 150 }
     },
     {
       id: '3',
       name: 'Tech Holdings AB',
       idNumber: '559245-4937',
       type: 'company',
-      position: { x: 520, y: 120 }
+      position: { x: 600, y: 150 }
     },
     {
       id: '4',
       name: 'Innovation Chart LLC',
       idNumber: 'C716984',
       type: 'company',
-      position: { x: 400, y: 360 }
+      position: { x: 400, y: 450 }
     }
   ],
   connections: [
