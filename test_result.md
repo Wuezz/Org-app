@@ -244,6 +244,17 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified grid-based snapping works perfectly. Grid is visible with 120px spacing, entities snap to grid points, V-shaped layouts work correctly with center positioning between entities at same level, and visual guidelines function properly."
+  - task: "Enhance visual grid to appear infinite and scale with zoom/pan"
+    implemented: false
+    working: "NA"
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: true
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested infinite grid pattern using CSS background on canvas element with .snap-active class toggle, ensuring it scrolls with canvas and works with exports."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
