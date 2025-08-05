@@ -739,13 +739,15 @@ const OwnershipCanvas = () => {
         >
           {/* Grid Background */}
           <div 
-            className="absolute inset-0 opacity-20 grid-background pointer-events-none"
+            className={`absolute inset-0 grid-background pointer-events-none transition-opacity duration-300 ${
+              snapToAlignment ? 'opacity-30' : 'opacity-10'
+            }`}
             style={{
               backgroundImage: `
-                linear-gradient(rgba(0,0,0,0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(0,0,0,0.1) 1px, transparent 1px)
+                linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px)
               `,
-              backgroundSize: '20px 20px'
+              backgroundSize: '120px 120px' // Match GRID_SIZE
             }}
           />
 
