@@ -726,8 +726,11 @@ const OwnershipCanvas = () => {
       {/* Canvas */}
       <div className="flex-1 relative overflow-hidden">
         <div 
+          id="ownership-canvas"
           ref={canvasRef}
-          className={`w-full h-full relative ${isPanning ? 'cursor-grabbing' : 'cursor-grab'}`}
+          className={`w-full h-full relative ${isPanning ? 'cursor-grabbing' : 'cursor-grab'} ${
+            snapToAlignment ? 'snap-active' : ''
+          }`}
           style={{
             transform: `scale(${zoom}) translate(${pan.x}px, ${pan.y}px)`,
             transformOrigin: '0 0'
