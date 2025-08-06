@@ -434,6 +434,23 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified favicon implementation: 1) File exists in public directory with correct size (22677 bytes), 2) HTTP server returns 200 OK with proper content-type: image/png when accessing /favicon.png, 3) Application loads successfully with favicon references in HTML head section. Favicon now appears in browser tabs for improved branding."
+  - task: "Update feedback form to use secure FormSubmit alias"
+    implemented: true
+    working: true
+    file: "/app/frontend/src/components/OwnershipCanvas.jsx"
+    stuck_count: 0
+    priority: "high"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested to replace the feedback form URL from https://formsubmit.co/edward@tuvekarr.com with secure alias https://formsubmit.co/el/zorere to avoid exposing real email address in frontend JavaScript code."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Successfully updated feedback function in OwnershipCanvas.jsx line 483: Changed fetch URL from 'https://formsubmit.co/edward@tuvekarr.com' to 'https://formsubmit.co/el/zorere'. Kept all other functionality identical including FormData structure and error handling."
+        - working: true
+        - agent: "main"
+        - comment: "Verified secure feedback form works perfectly: 1) Form opens and accepts user input correctly, 2) Submits successfully using new secure endpoint zorere alias, 3) Thank you screen displays after successful submission, 4) Success toast notification appears. Security improvement implemented without affecting functionality."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
