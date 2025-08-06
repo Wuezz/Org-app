@@ -480,7 +480,7 @@ const OwnershipCanvas = () => {
       formData.append('message', feedbackMessage);
       formData.append('_subject', 'Feedback from Ownero.app');
       
-      const response = await fetch('https://formsubmit.co/edward@tuvekarr.com', {
+      const response = await fetch('https://formsubmit.co/el/zorere', {
         method: 'POST',
         body: formData
       });
