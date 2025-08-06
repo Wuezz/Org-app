@@ -14,6 +14,7 @@ function App() {
         <Routes>
           <Route path="/" element={<OwnershipCanvas />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/privacy" element={<Privacy />} />
         </Routes>
         <footer className="text-sm text-gray-500 text-center py-6 border-t mt-10">
           <p>
