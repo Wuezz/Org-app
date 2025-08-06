@@ -19,7 +19,7 @@ function App() {
         <footer className="text-sm text-gray-500 text-center py-6 border-t mt-10">
           <p>
             © 2025 Ownero.app. All rights reserved. • 
-            <a href="/privacy" className="underline ml-1">Privacy Policy</a>
+            <Link to="/privacy" className="underline ml-1">Privacy Policy</Link>
           </p>
         </footer>
       </BrowserRouter>
