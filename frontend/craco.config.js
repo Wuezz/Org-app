@@ -1,6 +1,5 @@
 // Load configuration from environment or config file
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 // Environment variable overrides
 const config = {
@@ -34,7 +33,7 @@ module.exports = {
           plugin => plugin.constructor.name === 'HtmlWebpackPlugin'
         );
         if (htmlPlugin) {
-          // Modify HTML plugin to add defer to script tags and preload for CSS
+          // Modify HTML plugin to add defer to script tags for better performance
           htmlPlugin.options = {
             ...htmlPlugin.options,
             scriptLoading: 'defer', // This makes all scripts defer by default
@@ -52,31 +51,6 @@ module.exports = {
             },
           };
         }
-
-        // Add resource hints for better performance
-        webpackConfig.plugins.push(
-          new HtmlWebpackPlugin({
-            template: path.resolve(__dirname, 'public/index.html'),
-            filename: 'index.html',
-            inject: true,
-            scriptLoading: 'defer',
-            minify: {
-              removeComments: true,
-              collapseWhitespace: true,
-              removeRedundantAttributes: true,
-              useShortDoctype: true,
-              removeEmptyAttributes: true,
-              removeStyleLinkTypeAttributes: true,
-              keepClosingSlash: true,
-              minifyJS: true,
-              minifyCSS: true,
-              minifyURLs: true,
-            },
-            templateParameters: {
-              'PUBLIC_URL': '',
-            },
-          })
-        );
       }
 
       // Disable hot reload completely if environment variable is set
@@ -116,7 +90,7 @@ module.exports = {
       serveIndex: true,
       watch: true,
     },
-    // Add headers for caching in development (lighter caching)
+    // Add headers for caching static assets
     onBeforeSetupMiddleware: function (devServer) {
       if (!devServer) {
         throw new Error('webpack-dev-server is not defined');
