@@ -700,6 +700,7 @@ const OwnershipCanvas = () => {
                 size="sm" 
                 onClick={handleZoomIn}
                 className="p-2"
+                aria-label="Zoom in"
               >
                 <ZoomIn className="h-4 w-4" />
               </Button>
