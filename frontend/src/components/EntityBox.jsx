@@ -80,6 +80,7 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
             e.stopPropagation();
             onAddOwner(entity.id);
           }}
+          aria-label="Add owner entity"
         >
           <ArrowUp className="h-3 w-3 text-blue-600" />
         </Button>
