@@ -721,6 +721,9 @@ const OwnershipCanvas = () => {
               <Switch
                 checked={snapToAlignment}
                 onCheckedChange={setSnapToAlignment}
+                role="switch"
+                aria-checked={snapToAlignment}
+                aria-label="Toggle snap to alignment grid"
               />
             </div>
             
