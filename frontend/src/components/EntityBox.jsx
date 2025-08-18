@@ -144,6 +144,7 @@ const EntityBox = ({ entity, onDragStart, onAddOwner, onAddSubsidiary, onEdit, i
             e.stopPropagation();
             onAddSubsidiary(entity.id);
           }}
+          aria-label="Add subsidiary entity"
         >
           <ArrowDown className="h-3 w-3 text-green-600" />
         </Button>
