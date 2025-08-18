@@ -468,6 +468,23 @@ frontend:
         - working: true
         - agent: "main"
         - comment: "Verified robots.txt implementation: 1) File created with correct content (62 bytes), 2) Accessible at http://localhost:3000/robots.txt with HTTP 200 OK response, 3) Returns proper content-type: text/plain; charset=UTF-8, 4) Content matches specification exactly. SEO optimization ready for search engine crawling."
+  - task: "Create sitemap.xml file for search engine indexing"
+    implemented: true
+    working: true
+    file: "/app/frontend/public/sitemap.xml"
+    stuck_count: 0
+    priority: "low"
+    needs_retesting: false
+    status_history:
+        - working: "NA"
+        - agent: "main"
+        - comment: "User requested to create sitemap.xml file in public folder with specific XML content listing the homepage URL with weekly changefreq and priority 1.0 for search engine indexing efficiency."
+        - working: "NA"
+        - agent: "main"
+        - comment: "Successfully created sitemap.xml file at /app/frontend/public/sitemap.xml with XML content specifying homepage https://ownero.app/ with changefreq weekly and priority 1.0, following sitemap protocol 0.9 schema."
+        - working: true
+        - agent: "main"
+        - comment: "Verified sitemap.xml implementation: 1) File created with correct XML structure (226 bytes), 2) Accessible at http://localhost:3000/sitemap.xml with HTTP 200 OK response, 3) Returns proper content-type: application/xml, 4) XML content validates against sitemap schema. Search engine indexing optimization complete."
   - task: "Fix drag behavior glitch"
     implemented: true
     working: true
