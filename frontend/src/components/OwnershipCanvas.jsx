@@ -688,6 +688,7 @@ const OwnershipCanvas = () => {
                 size="sm" 
                 onClick={handleZoomOut}
                 className="p-2"
+                aria-label="Zoom out"
               >
                 <ZoomOut className="h-4 w-4" />
               </Button>
