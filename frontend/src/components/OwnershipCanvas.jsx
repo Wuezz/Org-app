@@ -709,6 +709,7 @@ const OwnershipCanvas = () => {
                 size="sm" 
                 onClick={handleReset}
                 className="p-2"
+                aria-label="Reset zoom and position"
               >
                 <RotateCcw className="h-4 w-4" />
               </Button>
